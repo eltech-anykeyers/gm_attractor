@@ -1,0 +1,65 @@
+### QtCreator ###
+# A listing of all the files included in the project
+*.files
+
+# Include directories
+*.includes
+
+# Project configuration settings like predefined Macros
+*.config
+
+# Qt Creator settings
+*.creator
+
+# User project settings
+*.creator.user*
+
+# Qt Creator backups
+*.autosave
+
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+build
+
+### C++ ###
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
