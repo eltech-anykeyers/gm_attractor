@@ -18,7 +18,7 @@ void FpsManager::init(double targetFps)
     mCurrentFps = 0.0;
     mSleepDuration = 0.0;
     mFrameStartTime = glfwGetTime();
-    mFrameEndTime = frameStartTime + 1;
+    mFrameEndTime = mFrameStartTime + 1;
     mFrameDuration = 1;
 }
 

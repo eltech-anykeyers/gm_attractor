@@ -7,11 +7,11 @@ public:
     FpsManager(int targetFps);
 
     void init(double targetFps);
-    double enforceFps();
+    double enforceFPS();
 
     inline double getFrameDuration()
     {
-        return frameDuration;
+        return mFrameDuration;
     }
 
     inline int getTargetFps() const
