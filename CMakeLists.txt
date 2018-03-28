@@ -8,7 +8,8 @@ set(CMAKE_CXX_STANDARD 11)
 project(AttractorViewer)
 
 # Application
-add_executable(${PROJECT_NAME} ${SOURCES}/main.cpp ${SOURCES}/utils.cpp)
+add_executable(${PROJECT_NAME} ${SOURCES}/main.cpp ${SOURCES}/utils.cpp
+    ${SOURCES}/fpsmanager.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})
 
 # GLFW
