@@ -68,8 +68,10 @@ void Camera::handleMouseMove(int mouseX, int mouseY)
         mRotation.addY(-360);
     }
 
-    if (mMouseSetterCallback) mMouseSetterCallback(mWindowMidX, mWindowMidY);
-    else throw std::runtime_error("mMouseSetterCallback isn't set");
+    if (mMouseSetterCallback)
+    {
+        mMouseSetterCallback(mWindowMidX, mWindowMidY);
+    }
 }
 
 void Camera::move(double deltaTime)
