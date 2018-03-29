@@ -13,7 +13,6 @@ add_executable(${PROJECT_NAME} ${SOURCES}/main.cpp ${SOURCES}/utils.cpp
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})
 
 # GLM
-add_subdirectory(${LIBS}/glm)
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS}/glm)
 
 # GLFW
