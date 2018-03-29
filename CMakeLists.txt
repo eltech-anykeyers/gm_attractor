@@ -10,6 +10,7 @@ project(AttractorViewer)
 # Application
 add_executable(${PROJECT_NAME}
     ${SOURCES}/main.cpp
+    ${SOURCES}/iglapp.cpp
     ${SOURCES}/camera.cpp
     ${SOURCES}/fpsmanager.cpp
     ${SOURCES}/utils.cpp)
