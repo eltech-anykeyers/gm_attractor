@@ -105,15 +105,6 @@ void IGLApp::configure()
 void IGLApp::run()
 {
     mainLoop();
-    terminate();
-}
-
-void IGLApp::mainLoop()
-{
-    while (!glfwWindowShouldClose(mWindow))
-    {
-        render();
-    }
 }
 
 void IGLApp::terminate()

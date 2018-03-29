@@ -50,10 +50,9 @@ protected:
 
     void init();
     void configure();
-    void mainLoop();
     void terminate();
 
-    virtual void render() = 0;
+    virtual void mainLoop() = 0;
 };
 
 #endif // GLAPP_HPP

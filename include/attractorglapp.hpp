@@ -11,7 +11,7 @@ public:
     {}
 
 protected:
-    virtual void render() override;
+    virtual void mainLoop() override;
 };
 
 #endif // ATTRACTORGLAPP_HPP

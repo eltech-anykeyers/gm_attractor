@@ -1,10 +1,15 @@
 #include <attractorglapp.hpp>
 #include <GL/gl.h>
 
-void AttractorGLApp::render()
+void AttractorGLApp::mainLoop()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    while (!glfwWindowShouldClose(mWindow))
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
 
-    glfwSwapBuffers(mWindow);
-    glfwPollEvents();
+        glfwSwapBuffers(mWindow);
+        glfwPollEvents();
+    }
+
+    terminate();
 }
