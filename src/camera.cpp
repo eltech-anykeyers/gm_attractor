@@ -14,9 +14,6 @@ Camera::Camera(float windowWidth, float windowHeight)
 
     mWindowMidX = mWindowWidth / 2.0f;
     mWindowMidY = mWindowHeight / 2.0f;
-
-    if (mMouseSetterCallback) mMouseSetterCallback(mWindowMidX, mWindowMidY);
-    else throw std::runtime_error("mMouseSetterCallback isn't set");
 }
 
 void Camera::initCamera()
