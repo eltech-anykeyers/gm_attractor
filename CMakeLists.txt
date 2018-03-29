@@ -12,6 +12,10 @@ add_executable(${PROJECT_NAME} ${SOURCES}/main.cpp ${SOURCES}/utils.cpp
     ${SOURCES}/camera.cpp ${SOURCES}/fpsmanager.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})
 
+# GLM
+add_subdirectory(${LIBS}/glm)
+target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS}/glm)
+
 # GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
