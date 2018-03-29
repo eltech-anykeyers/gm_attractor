@@ -14,7 +14,7 @@ std::vector<double> Utils::readPoints(std::string fileName)
 
     double value = 0.0;
     std::vector<double> result;
-    // TODO: Check for reading error.
+    /// TODO: Check for reading error.
     while (input >> value)
     {
         result.push_back(value);

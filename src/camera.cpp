@@ -51,7 +51,8 @@ void Camera::handleMouseMove(int mouseX, int mouseY)
         mRotation.setX(90);
     }
 
-    /* Looking left and right - keep angles in the range 0.0 to 360.0
+    /**
+     * Looking left and right - keep angles in the range 0.0 to 360.0
      * 0 degrees is looking directly down the negative Z axis "North",
      * 90 degrees is "East", 180 degrees is "South", 270 degrees is "West"
      * We can also do this so that our 360 degrees goes -180 through +180
@@ -81,7 +82,7 @@ void Camera::move(double deltaTime)
     double sinYRot = sin(toRads(mRotation.getY()));
     double cosYRot = cos(toRads(mRotation.getY()));
 
-    // This cancels out moving on the Z axis when we're looking up or down.
+    /// This cancels out moving on the Z axis when we're looking up or down.
     double pitchLimitFactor = cosXRot;
 
     if (IsHoldingForward)
@@ -112,7 +113,8 @@ void Camera::move(double deltaTime)
 
     movement.normalise();
 
-    /* Calculate our value to keep the movement the same
+    /**
+     * Calculate our value to keep the movement the same
      * speed regardless of the framerate.
      */
     double framerateIndependentFactor = mMovementSpeedFactor * deltaTime;

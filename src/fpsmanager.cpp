@@ -26,32 +26,36 @@ void FpsManager::init(double targetFps)
 
 double FpsManager::enforceFPS()
 {
-    // Get current time.
+    /// Get current time.
     mFrameEndTime = glfwGetTime();
 
-    /* Calculate how long it's been since
+    /**
+     * Calculate how long it's been since
      * the mFrameStartTime was set (at the end of this method).
      */
     mFrameDuration = mFrameEndTime - mFrameStartTime;
 
-    /* Calculate how long we should sleep for
+    /**
+     * Calculate how long we should sleep for
      * to stick to our target frame rate.
      */
     mSleepDuration = mTargetFrameDuration - mFrameDuration;
 
-    // If we're running faster than our target duration, sleep until we catch up!
+    /// If we're running faster than our target duration, sleep until we catch up!
     if (mSleepDuration > 0.0)
     {
         if (mSleepCallback) mSleepCallback(mSleepDuration);
         else throw std::runtime_error("mSleepCallback isn't set.");
     }
 
-    /* Reset the frame start time to be now - this means
+    /**
+     * Reset the frame start time to be now - this means
      * we only need put a single call into the main loop.
      */
     mFrameStartTime = glfwGetTime();
 
-    /* Pass back our total frame duration (including any sleep and
+    /**
+     * Pass back our total frame duration (including any sleep and
      * the time it took to run this function) to be used as
      * our deltaTime value.
      */

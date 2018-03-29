@@ -37,10 +37,11 @@ public:
 
     void normalise()
     {
-        // Calculate the magnitude of our vector.
+        /// Calculate the magnitude of our vector.
         T magnitude = sqrt((x * x) + (y * y) + (z * z));
 
-        /* As long as the magnitude isn't zero, divide each element
+        /**
+         * As long as the magnitude isn't zero, divide each element
          * by the magnitude to get the normalised value between -1 and +1.
          */
         if (magnitude != 0)
@@ -51,7 +52,8 @@ public:
         }
     }
 
-    /* Method to calculate and return the scalar dot product of two vectors
+    /**
+     * Method to calculate and return the scalar dot product of two vectors
      * Note: The dot product of two vectors tell us things
      * about the angle between the vectors. That is, it tells us
      * if they are pointing in the same direction (i.e. are they parallel?
@@ -70,7 +72,8 @@ public:
         return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
     }
 
-    /* Method to calculate and return a vector which is the
+    /**
+     * Method to calculate and return a vector which is the
      * cross product of two vectors.
      *
      * Note: The cross product is simply a vector which is perpendicular
