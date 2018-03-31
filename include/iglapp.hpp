@@ -4,10 +4,11 @@
 #include <memory>
 #include <string>
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <camera.hpp>
 #include <fpsmanager.hpp>
-#include <GL/gl.h>
-#include <GLFW/glfw3.h>
 
 class IGLApp
 {

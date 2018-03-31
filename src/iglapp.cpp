@@ -3,6 +3,8 @@
 
 #include <iglapp.hpp>
 
+const std::string GLAD_LOAD_FAILED_MSG = "GLAD can't be loaded.";
+
 const std::string GLFW_INIT_FAILED_MSG = "GLFW can't be initialized.";
 const std::string GLFW_CREATE_WINDOW_FAILED_MSG = "GLFW window can't be created.";
 
@@ -41,52 +43,17 @@ void IGLApp::init()
                                mWindowTitle.c_str(), nullptr, nullptr);
     if (!mWindow)
     {
-        glfwTerminate();
+        throw std::runtime_error(GLFW_CREATE_WINDOW_FAILED_MSG);
+    }
+    glfwMakeContextCurrent(mWindow);
+
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+    {
         throw std::runtime_error(GLFW_CREATE_WINDOW_FAILED_MSG);
     }
 
-    /// Disable VSync.
-    glfwSwapInterval(0);
-
     /// Setup viewport to be the entire size of the window.
     glViewport(0, 0, mWindowWidth, mWindowHeight);
-
-    /// Change to the projection matrix, reset matrix and set up our projection.
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    /**
-     * The following code is a fancy bit of math that is eqivilant to calling:
-     * gluPerspective(fieldOfView / 2.0f, width / height, near, far);
-     * We do it this way simply to avoid requiring glu.h
-     */
-    GLfloat aspectRatio = (mWindowWidth > mWindowHeight)
-                          ? float(mWindowWidth) / float(mWindowHeight)
-                          : float(mWindowHeight) / float(mWindowWidth);
-    GLfloat fH = tan(float(mFieldOfView / 360.0f * M_PI)) * mNearDistance;
-    GLfloat fW = fH * aspectRatio;
-    glFrustum(-fW, fW, -fH, fH, mNearDistance, mFarDistance);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    /// Set out clear color to black, full alpha.
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-    /// Enable the depth buffer.
-    glEnable(GL_DEPTH_TEST);
-
-    /// Clear the entire depth of the depth buffer.
-    glClearDepth(1.0f);
-
-    /**
-     * Set our depth function to overwrite
-     * if new value less than or equal to current value
-     */
-    glDepthFunc(GL_LEQUAL);
-
-    /// Ask for nicest perspective correction.
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
 void IGLApp::configure()

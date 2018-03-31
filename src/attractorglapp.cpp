@@ -1,5 +1,4 @@
 #include <attractorglapp.hpp>
-#include <GL/gl.h>
 
 void AttractorGLApp::mainLoop()
 {

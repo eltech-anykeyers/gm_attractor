@@ -10,6 +10,7 @@ project(AttractorViewer)
 # Application
 add_executable(${PROJECT_NAME}
     ${SOURCES}/main.cpp
+    ${SOURCES}/glad.c
     ${SOURCES}/iglapp.cpp
     ${SOURCES}/attractorglapp.cpp
     ${SOURCES}/fpsmanager.cpp
@@ -25,8 +26,3 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(${LIBS}/glfw)
 target_link_libraries(${PROJECT_NAME} glfw)
-
-# OpenGL
-find_package(OpenGL REQUIRED)
-target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
