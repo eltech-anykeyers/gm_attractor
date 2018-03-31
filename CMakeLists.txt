@@ -12,7 +12,6 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}/main.cpp
     ${SOURCES}/iglapp.cpp
     ${SOURCES}/attractorglapp.cpp
-    ${SOURCES}/camera.cpp
     ${SOURCES}/fpsmanager.cpp
     ${SOURCES}/utils.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})

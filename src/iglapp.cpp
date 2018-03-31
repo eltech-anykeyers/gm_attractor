@@ -92,11 +92,7 @@ void IGLApp::init()
 void IGLApp::configure()
 {
     /// Camera.
-    mCamera = std::make_shared<Camera>(mWindowWidth, mWindowHeight);
-    mCamera->setMouseSetterCallback([&](double x, double y)
-    {
-        glfwSetCursorPos(mWindow, x, y);
-    });
+    mCamera = std::make_shared<Camera>();
 
     /// FpsManager.
     mFpsManager = std::make_shared<FpsManager>(20);

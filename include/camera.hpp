@@ -1,63 +1,116 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-#include <functional>
+#include <vector>
 
-#include <vec3.hpp>
+#include <GL/gl.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+enum CameraMovement {
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT
+};
 
 class Camera
 {
 public:
-    static const double TO_RADS;
+    glm::vec3 mPosition;
+    glm::vec3 mFront;
+    glm::vec3 mUp;
+    glm::vec3 mRight;
+    glm::vec3 mWorldUp;
 
-    bool IsHoldingForward;
-    bool IsHoldingBackward;
-    bool IsHoldingLeftStrafe;
-    bool IsHoldingRightStrafe;
+    float mYaw;
+    float mPitch;
 
-    Camera(float windowWidth, float windowHeight);
+    float mMovementSpeed;
+    float mMouseSensitivity;
+    float mZoom;
 
-    void move(double deltaTime);
-    void handleMouseMove(int mouseX, int mouseY);
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
+           glm::vec3 up       = glm::vec3(0.0f, 1.0f, 0.0f),
+           float yaw          = DFLT_YAW,
+           float pitch        = DFLT_PITCH)
+        : mFront(glm::vec3(0.0f, 0.0f, -1.0f))
+        , mMovementSpeed(DFLT_SPEED)
+        , mMouseSensitivity(DFLT_SENSITIVITY)
+        , mZoom(DFLT_ZOOM)
+    {
+        mPosition = position;
+        mWorldUp  = up;
+        mYaw      = yaw;
+        mPitch    = pitch;
 
-    const double toRads(const double& angleInDegrees) const
-    { return angleInDegrees * TO_RADS; }
+        updateCameraVectors();
+    }
 
-    float getPitchSensitivity()            { return mPitchSensitivity;  }
-    void  setPitchSensitivity(float value) { mPitchSensitivity = value; }
+    void processKeyboard(CameraMovement direction, float deltaTime)
+    {
+        float velocity = mMovementSpeed * deltaTime;
 
-    float getYawSensitivity()              { return mYawSensitivity;    }
-    void  setYawSensitivity(float value)   { mYawSensitivity   = value; }
+        if (direction == FORWARD)  mPosition += mFront * velocity;
+        if (direction == BACKWARD) mPosition -= mFront * velocity;
+        if (direction == LEFT)     mPosition -= mRight * velocity;
+        if (direction == RIGHT)    mPosition += mRight * velocity;
+    }
 
-    Vec3<double> getPosition() const { return mPosition;        }
-    double getXPosition()      const { return mPosition.getX(); }
-    double getYPosition()      const { return mPosition.getY(); }
-    double getZPosition()      const { return mPosition.getZ(); }
+    void processMouseMovement(float xOffset, float yOffset,
+                              GLboolean constrainPitch = true)
+    {
+        xOffset *= mMouseSensitivity;
+        yOffset *= mMouseSensitivity;
 
-    Vec3<double> getRotation() const { return mRotation;        }
-    double getXRotation()      const { return mRotation.getX(); }
-    double getYRotation()      const { return mRotation.getY(); }
-    double getZRotation()      const { return mRotation.getZ(); }
+        mYaw   += xOffset;
+        mPitch += yOffset;
 
-    void setMouseSetterCallback(const std::function<void(double, double)>& callback);
+        if (constrainPitch)
+        {
+            if (mPitch >  89.0f) mPitch =  89.0f;
+            if (mPitch < -89.0f) mPitch = -89.0f;
+        }
+
+        updateCameraVectors();
+    }
+
+    void processMouseScroll(float yOffset)
+    {
+        if (mZoom >= 1.0f && mZoom <= 45.0f) mZoom -= yOffset;
+        if (mZoom <= 1.0f)                   mZoom =  1.0f;
+        if (mZoom >= 45.0f)                  mZoom =  45.0f;
+    }
+
+    glm::mat4 getViewMatrix()
+    {
+        return glm::lookAt(mPosition, mPosition + mFront, mUp);
+    }
 
 private:
-    Vec3<double> mPosition;
-    Vec3<double> mRotation;
-    Vec3<double> mSpeed;
+    constexpr static const float DFLT_YAW         = -90.0f;
+    constexpr static const float DFLT_PITCH       =  0.0f;
+    constexpr static const float DFLT_SPEED       =  2.5f;
+    constexpr static const float DFLT_SENSITIVITY =  0.1f;
+    constexpr static const float DFLT_ZOOM        =  45.0f;
 
-    double mMovementSpeedFactor;
-    double mPitchSensitivity;
-    double mYawSensitivity;
+    void updateCameraVectors()
+    {
+        /// Calculate the new Front vector
+        glm::vec3 front;
 
-    int mWindowWidth;
-    int mWindowHeight;
-    int mWindowMidX;
-    int mWindowMidY;
+        front.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+        front.y = sin(glm::radians(mPitch));
+        front.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
 
-    std::function<void(double, double)> mMouseSetterCallback;
-
-    void initCamera();
+        mFront = glm::normalize(front);
+        /**
+         * Normalize the vectors, because their length gets closer
+         * to 0 the more you look up or down which results in slower movement.
+         */
+        mRight = glm::normalize(glm::cross(mFront, mWorldUp));
+        mUp    = glm::normalize(glm::cross(mRight, mFront));
+    }
 };
 
 #endif // CAMERA_HPP
