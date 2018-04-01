@@ -49,9 +49,9 @@ protected:
     static std::shared_ptr<Camera> mCamera;
     static std::shared_ptr<FpsManager> mFpsManager;
 
-    void init();
-    void configure();
-    void terminate();
+    virtual void init();
+    virtual void configure();
+    virtual void terminate();
 
     virtual void mainLoop() = 0;
 };
