@@ -16,7 +16,21 @@ void AttractorGLApp::configure()
     {
         sCamera->processMouseMovement(xPos, yPos);
     });
+}
 
+void AttractorGLApp::processInput()
+{
+    if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(mWindow, true);
+
+    if (glfwGetKey(mWindow, GLFW_KEY_W) == GLFW_PRESS)
+        sCamera->processKeyboard(FORWARD, sFpsManager->enforceFPS());
+    if (glfwGetKey(mWindow, GLFW_KEY_S) == GLFW_PRESS)
+        sCamera->processKeyboard(BACKWARD, sFpsManager->enforceFPS());
+    if (glfwGetKey(mWindow, GLFW_KEY_A) == GLFW_PRESS)
+        sCamera->processKeyboard(LEFT, sFpsManager->enforceFPS());
+    if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
+        sCamera->processKeyboard(RIGHT, sFpsManager->enforceFPS());
 }
 
 void AttractorGLApp::mainLoop()
