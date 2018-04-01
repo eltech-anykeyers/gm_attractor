@@ -1,7 +1,7 @@
 #include <attractorglapp.hpp>
 
 std::shared_ptr<Camera> AttractorGLApp::sCamera = std::make_shared<Camera>();
-std::shared_ptr<FpsManager> AttractorGLApp::mFpsManager = std::make_shared<FpsManager>(20);
+std::shared_ptr<FpsManager> AttractorGLApp::sFpsManager = std::make_shared<FpsManager>(20);
 
 void AttractorGLApp::configure()
 {

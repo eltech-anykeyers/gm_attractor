@@ -23,7 +23,7 @@ protected:
 
 private:
     static std::shared_ptr<Camera> sCamera;
-    static std::shared_ptr<FpsManager> mFpsManager;
+    static std::shared_ptr<FpsManager> sFpsManager;
 };
 
 #endif // ATTRACTORGLAPP_HPP
