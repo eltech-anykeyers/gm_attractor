@@ -176,7 +176,7 @@ private:
             if (!success)
             {
                 glGetShaderInfoLog(shader, BUFFER_SIZE, nullptr, infoLog);
-                /// TODO: Show or throw something.
+                throw std::runtime_error(infoLog);
             }
         }
         else
@@ -185,7 +185,7 @@ private:
             if (!success)
             {
                 glGetProgramInfoLog(shader, BUFFER_SIZE, nullptr, infoLog);
-                /// TODO: Show or throw something.
+                throw std::runtime_error(infoLog);
             }
         }
     }
