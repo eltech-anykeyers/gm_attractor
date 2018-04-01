@@ -7,18 +7,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <camera.hpp>
-#include <fpsmanager.hpp>
-
 class IGLApp
 {
 public:
     IGLApp(GLint width, GLint height, const std::string& title);
 
     void run();
-
-    void setFrameBufferSizeCallback(void (* func)(GLFWwindow*, int, int));
-    void setCursorPosCallback(void (* func)(GLFWwindow*, double, double));
 
     GLfloat getWindowWidth() const;
     void setWindowWidth(GLint value);
@@ -49,14 +43,14 @@ protected:
     GLfloat mNearDistance;
     GLfloat mFarDistance;
 
-    static std::shared_ptr<Camera> sCamera;
-    static std::shared_ptr<FpsManager> mFpsManager;
-
     virtual void init();
     virtual void configure();
     virtual void terminate();
 
     virtual void mainLoop() = 0;
+
+    virtual void setFrameBufferSizeCallback(void (* func)(GLFWwindow*, int, int)) = 0;
+    virtual void setCursorPosCallback(void (* func)(GLFWwindow*, double, double)) = 0;
 };
 
 #endif // GLAPP_HPP

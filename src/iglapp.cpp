@@ -14,9 +14,6 @@ const GLfloat DEFAULT_FIELD_OF_VIEW = 45.0f;
 const GLfloat DEFAULT_NEAR_DISTANCE = 2.0f;
 const GLfloat DEFAULT_FAR_DISTANCE = 1500.0f;
 
-std::shared_ptr<Camera> IGLApp::sCamera = std::make_shared<Camera>();
-std::shared_ptr<FpsManager> IGLApp::mFpsManager = std::make_shared<FpsManager>(20);
-
 IGLApp::IGLApp(GLint width, GLint height, const std::string& title)
     : mWindowWidth(width)
     , mWindowHeight(height)
@@ -64,16 +61,6 @@ void IGLApp::configure()
     glEnable(GL_DEPTH_TEST);
 
     glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-    setFrameBufferSizeCallback([](GLFWwindow*, int width, int height)
-    {
-        glViewport(0, 0, width, height);
-    });
-
-    setCursorPosCallback([](GLFWwindow*, double xPos, double yPos)
-    {
-        sCamera->processMouseMovement(xPos, yPos);
-    });
 }
 
 void IGLApp::run()
