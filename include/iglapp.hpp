@@ -46,8 +46,8 @@ protected:
     GLfloat mNearDistance;
     GLfloat mFarDistance;
 
-    std::shared_ptr<Camera> mCamera;
-    std::shared_ptr<FpsManager> mFpsManager;
+    static std::shared_ptr<Camera> mCamera;
+    static std::shared_ptr<FpsManager> mFpsManager;
 
     void init();
     void configure();
