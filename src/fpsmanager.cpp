@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <unistd.h>
 
 #include <fpsmanager.hpp>
 #include <GLFW/glfw3.h>
@@ -42,11 +43,7 @@ double FpsManager::enforceFPS()
     mSleepDuration = mTargetFrameDuration - mFrameDuration;
 
     /// If we're running faster than our target duration, sleep until we catch up!
-    if (mSleepDuration > 0.0)
-    {
-        if (mSleepCallback) mSleepCallback(mSleepDuration);
-        else throw std::runtime_error("mSleepCallback isn't set.");
-    }
+    if (mSleepDuration > 0.0) usleep(mSleepDuration);
 
     /**
      * Reset the frame start time to be now - this means
@@ -60,9 +57,4 @@ double FpsManager::enforceFPS()
      * our deltaTime value.
      */
     return mFrameDuration + (mFrameStartTime - mFrameEndTime);
-}
-
-void FpsManager::setSleepCallback(const std::function<void(double)>& callback)
-{
-    mSleepCallback = callback;
 }

@@ -1,8 +1,6 @@
 #ifndef FPSMANAGER_HPP
 #define FPSMANAGER_HPP
 
-#include <functional>
-
 class FpsManager
 {
 public:
@@ -36,8 +34,6 @@ public:
         mTargetFrameDuration = 1.0 / mTargetFps;
     }
 
-    void setSleepCallback(const std::function<void(double)>& callback);
-
 private:
     static const double MIN_TARGET_FPS;
     static const double MAX_TARGET_FPS;
@@ -52,8 +48,6 @@ private:
 
     double mTargetFrameDuration;
     double mSleepDuration;
-
-    std::function<void(double)> mSleepCallback;
 };
 
 #endif // FPSMANAGER_HPP
