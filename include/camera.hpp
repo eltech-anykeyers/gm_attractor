@@ -56,9 +56,23 @@ public:
         if (direction == RIGHT)    mPosition += mRight * velocity;
     }
 
-    void processMouseMovement(float xOffset, float yOffset,
+    void processMouseMovement(float xPos, float yPos,
                               GLboolean constrainPitch = true)
     {
+        if (mFirstMouse)
+        {
+            mLastXPos = xPos;
+            mLastYPos = yPos;
+            mFirstMouse = false;
+        }
+
+        float xOffset = xPos - mLastXPos;
+        /// Reversed since y-coordinates go from bottom to top.
+        float yOffset = mLastYPos - yPos;
+
+        mLastXPos = xPos;
+        mLastYPos = yPos;
+
         xOffset *= mMouseSensitivity;
         yOffset *= mMouseSensitivity;
 
@@ -92,6 +106,11 @@ private:
     constexpr static const float DFLT_SPEED       =  2.5f;
     constexpr static const float DFLT_SENSITIVITY =  0.1f;
     constexpr static const float DFLT_ZOOM        =  45.0f;
+
+    double mLastXPos;
+    double mLastYPos;
+
+    bool mFirstMouse = true;
 
     void updateCameraVectors()
     {
