@@ -58,6 +58,8 @@ void IGLApp::init()
 
 void IGLApp::configure()
 {
+    glEnable(GL_DEPTH_TEST);
+
     /// Camera.
     mCamera = std::make_shared<Camera>();
 
