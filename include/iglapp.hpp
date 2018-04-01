@@ -17,6 +17,8 @@ public:
 
     void run();
 
+    void setFrameBufferSizeCallback(void (* func)(GLFWwindow*, int, int));
+
     GLfloat getWindowWidth() const;
     void setWindowWidth(GLint value);
 

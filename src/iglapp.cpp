@@ -62,6 +62,11 @@ void IGLApp::configure()
 
     glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+    setFrameBufferSizeCallback([](GLFWwindow*, int width, int height)
+    {
+        glViewport(0, 0, width, height);
+    });
+
     /// Camera.
     mCamera = std::make_shared<Camera>();
 
