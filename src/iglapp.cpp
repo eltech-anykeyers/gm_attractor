@@ -60,6 +60,8 @@ void IGLApp::configure()
 {
     glEnable(GL_DEPTH_TEST);
 
+    glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     /// Camera.
     mCamera = std::make_shared<Camera>();
 
