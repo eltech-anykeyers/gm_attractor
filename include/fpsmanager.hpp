@@ -65,7 +65,7 @@ public:
 
     void setTargetFps(int fpsLimit)
     {
-        if (fpsLimit < MIN_TARGET_FPS)      fpsLimit = MIN_TARGET_FPS;
+        if      (fpsLimit < MIN_TARGET_FPS) fpsLimit = MIN_TARGET_FPS;
         else if (fpsLimit > MAX_TARGET_FPS) fpsLimit = MAX_TARGET_FPS;
 
         mTargetFps = fpsLimit;
