@@ -8,7 +8,7 @@
 class FpsManager
 {
 public:
-    FpsManager(int targetFps)
+    FpsManager(int targetFps = FpsManager::MIN_TARGET_FPS)
         : mFrameCount(0)
         , mCurrentFps(0.0)
         , mSleepDuration(0.0)
