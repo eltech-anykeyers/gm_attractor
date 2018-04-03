@@ -13,7 +13,6 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}/glad.c
     ${SOURCES}/iglapp.cpp
     ${SOURCES}/attractorglapp.cpp
-    ${SOURCES}/fpsmanager.cpp
     ${SOURCES}/utils.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})
 
