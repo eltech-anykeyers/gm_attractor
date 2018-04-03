@@ -11,7 +11,7 @@ const std::string GLFW_CREATE_WINDOW_FAILED_MSG = "GLFW window can't be created.
 const std::string INCORRECT_VALUE_MSG = "Incorrect value";
 
 const GLfloat DEFAULT_FIELD_OF_VIEW = 45.0f;
-const GLfloat DEFAULT_NEAR_DISTANCE = 2.0f;
+const GLfloat DEFAULT_NEAR_DISTANCE = 0.1f;
 const GLfloat DEFAULT_FAR_DISTANCE = 1500.0f;
 
 IGLApp::IGLApp(GLint width, GLint height, const std::string& title)
