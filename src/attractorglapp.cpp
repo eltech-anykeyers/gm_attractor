@@ -1,4 +1,5 @@
 #include <attractorglapp.hpp>
+#include <utils.hpp>
 
 std::shared_ptr<Camera> AttractorGLApp::sCamera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 10.0f));
 std::shared_ptr<FpsManager> AttractorGLApp::sFpsManager = std::make_shared<FpsManager>();
@@ -25,22 +26,39 @@ void AttractorGLApp::configure()
 
     mMainShader = std::make_shared<Shader>("shaders/main.vs", "shaders/main.fs");
 
-    float vert[] =
+    mTime = 1;
+
+    try
     {
-        0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
-    };
+        auto x = Utils::readPoints("res/x.txt");
+        auto y = Utils::readPoints("res/y.txt");
+        auto z = Utils::readPoints("res/z.txt");
 
-    glGenVertexArrays(1, &mVertexArrayObject);
-    glGenBuffers(1, &mVertexBufferObject);
+        mAttractorVerticesSize = 3 * x.size();
+        mAttractorVertices = new float[mAttractorVerticesSize];
+        for (size_t idx = 0, outerIdx = 0; idx < x.size(); idx += 3, ++outerIdx)
+        {
+            mAttractorVertices[idx + 0] = x[outerIdx];
+            mAttractorVertices[idx + 1] = y[outerIdx];
+            mAttractorVertices[idx + 2] = z[outerIdx];
+        }
+    }
+    catch (std::runtime_error&)
+    {
+        exit(-ERR_FILE_EXIST);
+    }
 
-    glBindVertexArray(mVertexArrayObject);
+    glGenVertexArrays(1, &mMainArrayObject);
+    glGenBuffers(1, &mMainBufferObject);
 
-    glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vert), vert, GL_STATIC_DRAW);
+    glBindVertexArray(mMainArrayObject);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(0));
+    glBindBuffer(GL_ARRAY_BUFFER, mMainBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, mAttractorVerticesSize * sizeof(float),
+                 mAttractorVertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+                          static_cast<void*>(0));
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -55,9 +73,6 @@ void AttractorGLApp::configure()
 
 void AttractorGLApp::mainLoop()
 {
-    mMainShader->use();
-    mMainShader->setVec3("color", glm::vec3(1.0f, 1.0f, 1.0f));
-
     while (!glfwWindowShouldClose(mWindow))
     {
         mTimeDelta = sFpsManager->enforceFPS();
@@ -65,22 +80,23 @@ void AttractorGLApp::mainLoop()
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        mMainShader->use();
+        mMainShader->setVec3("color", glm::vec3(1.0f, 1.0f, 1.0f));
         mViewMat = sCamera->getViewMatrix();
-
         glm::mat4 model(1.0f);
         model = glm::translate(model, glm::vec3(0.1f, 0.5f, 0.0f));
-
         setMVPViaVec(std::move(mProjectionMat * mViewMat * model));
-
-        glBindVertexArray(mVertexArrayObject);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glLineWidth(2.0f);
+        glBindVertexArray(mMainArrayObject);
+        glDrawArrays(GL_LINE_STRIP, 0, mTime);
+        glBindVertexArray(0);
 
         glfwSwapBuffers(mWindow);
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(1, &mVertexArrayObject);
-    glDeleteBuffers(1, &mVertexBufferObject);
+    glDeleteVertexArrays(1, &mMainArrayObject);
+    glDeleteBuffers(1, &mMainBufferObject);
 
     terminate();
 }
@@ -98,6 +114,10 @@ void AttractorGLApp::processInput()
         sCamera->processKeyboard(LEFT, mTimeDelta);
     if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
         sCamera->processKeyboard(RIGHT, mTimeDelta);
+    if (glfwGetKey(mWindow, GLFW_KEY_Q) == GLFW_PRESS)
+        if (++mTime > MAX_TIME) mTime = MAX_TIME;
+    if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
+        if (--mTime < MIN_TIME) mTime = MIN_TIME;
 }
 
 void AttractorGLApp::setMVPViaVec(const glm::mat4& mvp) const
