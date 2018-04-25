@@ -167,6 +167,18 @@ void AttractorGLApp::processInput()
         if (++mAttractorTime > MAX_TIME) mAttractorTime = MAX_TIME;
     if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
         if (--mAttractorTime < MIN_TIME) mAttractorTime = MIN_TIME;
+
+    /// Transparency adjusting.
+    if (glfwGetKey(mWindow, GLFW_KEY_Z) == GLFW_PRESS)
+    {
+        mAttractorColor[3] += ALPHA_DELTA;
+        if (mAttractorColor[3] > 1.0f) mAttractorColor[3] = 1.0f;
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_X) == GLFW_PRESS)
+    {
+        mAttractorColor[3] -= ALPHA_DELTA;
+        if (mAttractorColor[3] < 0.0f) mAttractorColor[3] = 0.0f;
+    }
 }
 
 void AttractorGLApp::setMVPViaVec(const glm::mat4& mvp) const

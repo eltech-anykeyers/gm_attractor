@@ -27,6 +27,8 @@ private:
     constexpr static const GLsizei MIN_TIME = 1;
     constexpr static const GLsizei MAX_TIME = 10000;
 
+    constexpr static const GLfloat ALPHA_DELTA = 0.001f;
+
     static std::shared_ptr<Camera> sCamera;
 
     GLfloat mFpsTimeDelta;
