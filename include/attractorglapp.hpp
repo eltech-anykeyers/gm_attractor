@@ -17,6 +17,7 @@ public:
 protected:
     virtual void configure() override;
     virtual void mainLoop() override;
+    virtual void terminate() override;
 
     virtual void setFrameBufferSizeCallback(void (* func)(GLFWwindow*, GLint, GLint)) override;
     virtual void setCursorPosCallback(void (* func)(GLFWwindow*, GLdouble, GLdouble)) override;

@@ -150,6 +150,16 @@ void AttractorGLApp::mainLoop()
     terminate();
 }
 
+void AttractorGLApp::terminate()
+{
+    delete[] mAttractorVertices;
+
+    delete[] mBackgroundVertices;
+    delete[] mBackgroundVerticesOrder;
+
+    IGLApp::terminate();
+}
+
 void AttractorGLApp::processInput()
 {
     if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
