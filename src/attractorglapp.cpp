@@ -28,6 +28,34 @@ void AttractorGLApp::configure()
 
     mTime = 1;
 
+    mBackgroundShader = std::make_shared<Shader>("shaders/background.vs", "shaders/background.fs");
+    mBackgroundVerticesSize = 36;
+    mBackgroundVertices = new float[mBackgroundVerticesSize] {
+        /**  vertices  **/  /**  colors  **/
+        -1.0f,  1.0f, 0.0f, 0.5f, 0.5f, 0.5f, /// Top-left.
+         1.0f,  1.0f, 0.0f, 0.5f, 0.5f, 0.5f, /// Top-right.
+         1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f, /// Bottom-right.
+        -1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f  /// Bottom-left.
+    };
+    glGenVertexArrays(1, &mBackgroundArrayObject);
+    glGenBuffers(1, &mBackgroundBufferObject);
+    glBindVertexArray(mBackgroundArrayObject);
+    glBindBuffer(GL_ARRAY_BUFFER, mBackgroundBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, mBackgroundVerticesSize * sizeof(float),
+                 mBackgroundVertices, GL_STATIC_DRAW);
+    glGenBuffers(1, &mBackgroundElementsBufferObject);
+    GLuint elem[] = { 0, 1, 2, 2, 3, 0 };
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBackgroundElementsBufferObject);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elem), elem, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          reinterpret_cast<void*>(0));
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          reinterpret_cast<void*>(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
     try
     {
         auto x = Utils::readPoints("res/x.txt");
@@ -79,6 +107,13 @@ void AttractorGLApp::mainLoop()
         processInput();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        mBackgroundShader->use();
+        glBindVertexArray(mBackgroundArrayObject);
+        glDisable(GL_DEPTH_TEST);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glEnable(GL_DEPTH_TEST);
+        glBindVertexArray(0);
 
         mMainShader->use();
         mMainShader->setVec3("color", glm::vec3(1.0f, 1.0f, 1.0f));

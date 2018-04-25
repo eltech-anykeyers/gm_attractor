@@ -34,10 +34,18 @@ private:
 
     float mTime;
 
+    size_t mBackgroundVerticesSize;
+    float* mBackgroundVertices;
+
     size_t mAttractorVerticesSize;
     float* mAttractorVertices;
 
+    std::shared_ptr<Shader> mBackgroundShader;
     std::shared_ptr<Shader> mMainShader;
+
+    unsigned int mBackgroundBufferObject;
+    unsigned int mBackgroundElementsBufferObject;
+    unsigned int mBackgroundArrayObject;
 
     unsigned int mMainBufferObject;
     unsigned int mMainArrayObject;
