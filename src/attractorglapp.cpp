@@ -178,6 +178,39 @@ void AttractorGLApp::processInput()
     if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
         if (--mAttractorTime < MIN_TIME) mAttractorTime = MIN_TIME;
 
+    /// Red color adjusting.
+    if (glfwGetKey(mWindow, GLFW_KEY_F1) == GLFW_PRESS)
+    {
+        mAttractorColor[0] += ALPHA_DELTA;
+        if (mAttractorColor[0] > 1.0f) mAttractorColor[0] = 1.0f;
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_F2) == GLFW_PRESS)
+    {
+        mAttractorColor[0] -= ALPHA_DELTA;
+        if (mAttractorColor[0] < 0.0f) mAttractorColor[0] = 0.0f;
+    }
+    /// Green color adjusting.
+    if (glfwGetKey(mWindow, GLFW_KEY_F3) == GLFW_PRESS)
+    {
+        mAttractorColor[1] += ALPHA_DELTA;
+        if (mAttractorColor[1] > 1.0f) mAttractorColor[1] = 1.0f;
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_F4) == GLFW_PRESS)
+    {
+        mAttractorColor[1] -= ALPHA_DELTA;
+        if (mAttractorColor[1] < 0.0f) mAttractorColor[1] = 0.0f;
+    }
+    /// Blue color adjusting.
+    if (glfwGetKey(mWindow, GLFW_KEY_F5) == GLFW_PRESS)
+    {
+        mAttractorColor[2] += ALPHA_DELTA;
+        if (mAttractorColor[2] > 1.0f) mAttractorColor[2] = 1.0f;
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_F6) == GLFW_PRESS)
+    {
+        mAttractorColor[2] -= ALPHA_DELTA;
+        if (mAttractorColor[2] < 0.0f) mAttractorColor[2] = 0.0f;
+    }
     /// Transparency adjusting.
     if (glfwGetKey(mWindow, GLFW_KEY_Z) == GLFW_PRESS)
     {
