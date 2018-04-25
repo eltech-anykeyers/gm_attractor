@@ -168,7 +168,7 @@ void AttractorGLApp::processInput()
 
 void AttractorGLApp::setMVPViaVec(const glm::mat4& mvp) const
 {
-    /// Only for main.vs.
+    /// Only for attractor.vs.
     mAttractorShader->setVec4("trans_0", mvp[0][0], mvp[0][1], mvp[0][2], mvp[0][3]);
     mAttractorShader->setVec4("trans_1", mvp[1][0], mvp[1][1], mvp[1][2], mvp[1][3]);
     mAttractorShader->setVec4("trans_2", mvp[2][0], mvp[2][1], mvp[2][2], mvp[2][3]);
