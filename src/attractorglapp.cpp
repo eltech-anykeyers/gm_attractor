@@ -31,8 +31,8 @@ void AttractorGLApp::configure()
     mBackgroundVertices = new GLfloat[mBackgroundVerticesSize]
     {
         /**  vertices  **/  /**  colors  **/
-        -1.0f,  1.0f, 0.0f, 0.5f, 0.5f, 0.5f, /// Top-left.
-         1.0f,  1.0f, 0.0f, 0.5f, 0.5f, 0.5f, /// Top-right.
+        -1.0f,  1.0f, 0.0f, 0.7f, 0.7f, 0.7f, /// Top-left.
+         1.0f,  1.0f, 0.0f, 0.7f, 0.7f, 0.7f, /// Top-right.
          1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f, /// Bottom-right.
         -1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f  /// Bottom-left.
     };
