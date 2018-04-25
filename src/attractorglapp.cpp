@@ -44,6 +44,7 @@ void AttractorGLApp::configure()
                  mBackgroundVertices, GL_STATIC_DRAW);
     glGenBuffers(1, &mBackgroundElementsBufferObject);
 
+    mBackgroundVerticesOrderSize = 6;
     mBackgroundVerticesOrder = new int[mBackgroundVerticesOrderSize]
     {
         0, 1, 2, 2, 3, 0
