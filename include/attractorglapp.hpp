@@ -18,45 +18,51 @@ protected:
     virtual void configure() override;
     virtual void mainLoop() override;
 
-    virtual void setFrameBufferSizeCallback(void (* func)(GLFWwindow*, int, int)) override;
-    virtual void setCursorPosCallback(void (* func)(GLFWwindow*, double, double)) override;
+    virtual void setFrameBufferSizeCallback(void (* func)(GLFWwindow*, GLint, GLint)) override;
+    virtual void setCursorPosCallback(void (* func)(GLFWwindow*, GLdouble, GLdouble)) override;
 
 private:
-    constexpr static const unsigned int ERR_FILE_EXIST = 4;
+    constexpr static const GLuint ERR_FILE_EXIST = 4;
 
-    constexpr static const size_t MIN_TIME = 1;
-    constexpr static const size_t MAX_TIME = 10000;
+    constexpr static const GLsizei MIN_TIME = 1;
+    constexpr static const GLsizei MAX_TIME = 10000;
 
     static std::shared_ptr<Camera> sCamera;
 
+    GLfloat mFpsTimeDelta;
     static std::shared_ptr<FpsManager> sFpsManager;
-    float mTimeDelta;
 
-    float mTime;
-
-    size_t mBackgroundVerticesSize;
-    float* mBackgroundVertices;
-
-    size_t mAttractorVerticesSize;
-    float* mAttractorVertices;
-
+    /// Background.
     std::shared_ptr<Shader> mBackgroundShader;
-    std::shared_ptr<Shader> mMainShader;
 
-    unsigned int mBackgroundBufferObject;
-    unsigned int mBackgroundElementsBufferObject;
-    unsigned int mBackgroundArrayObject;
+    GLuint mBackgroundBufferObject;
+    GLuint mBackgroundElementsBufferObject;
+    GLuint mBackgroundArrayObject;
 
-    unsigned int mMainBufferObject;
-    unsigned int mMainArrayObject;
+    GLfloat* mBackgroundVertices;
+    GLsizei mBackgroundVerticesSize;
+    GLint* mBackgroundVerticesOrder;
+    GLsizei mBackgroundVerticesOrderSize;
 
+    /// Attractor.
+    GLfloat mAttractorTime;
+
+    std::shared_ptr<Shader> mAttractorShader;
+
+    GLuint mAttractorBufferObject;
+    GLuint mAttractorArrayObject;
+
+    GLfloat* mAttractorVertices;
+    GLsizei mAttractorVerticesSize;
+
+    /// Transformations.
     glm::mat4 mProjectionMat;
     glm::mat4 mViewMat;
     glm::mat4 mModelMat;
 
-    void processInput();
-
     void setMVPViaVec(const glm::mat4& mvp) const;
+
+    void processInput();
 };
 
 #endif // ATTRACTORGLAPP_HPP

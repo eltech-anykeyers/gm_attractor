@@ -59,7 +59,6 @@ void IGLApp::init()
 void IGLApp::configure()
 {
     glEnable(GL_DEPTH_TEST);
-
     glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
@@ -82,9 +81,9 @@ void IGLApp::setWindowWidth(GLint value)
 {
     if (value <= 0)
     {
-        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " +
-                                 std::to_string(value));
+        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " + std::to_string(value));
     }
+
     mWindowWidth = value;
     mWindowCenterX = mWindowWidth / 2;
     /// TODO: Trigger window update or lock method after run() is called.
@@ -99,9 +98,9 @@ void IGLApp::setWindowHeight(GLint value)
 {
     if (value <= 0)
     {
-        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " +
-                                 std::to_string(value));
+        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " + std::to_string(value));
     }
+
     mWindowHeight = value;
     mWindowCenterY = mWindowHeight / 2;
     /// TODO: Trigger window update or lock method after run() is called.
@@ -116,9 +115,9 @@ void IGLApp::setFieldOfView(GLfloat value)
 {
     if (value < 0.0 && value > 180.0)
     {
-        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " +
-                                 std::to_string(value));
+        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " + std::to_string(value));
     }
+
     mFieldOfView = value;
 }
 
@@ -131,9 +130,9 @@ void IGLApp::setNearDistance(GLfloat value)
 {
     if (value < 0.0 && value > mFarDistance)
     {
-        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " +
-                                 std::to_string(value));
+        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " + std::to_string(value));
     }
+
     mNearDistance = value;
 }
 
@@ -146,9 +145,9 @@ void IGLApp::setFarDistance(GLfloat value)
 {
     if (value < 0.0 && value < mNearDistance)
     {
-        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " +
-                                 std::to_string(value));
+        throw std::runtime_error(INCORRECT_VALUE_MSG + ": " + std::to_string(value));
     }
+
     mFarDistance = value;
 }
 
