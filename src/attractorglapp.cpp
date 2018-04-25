@@ -212,12 +212,12 @@ void AttractorGLApp::processInput()
         if (mAttractorColor[2] < 0.0f) mAttractorColor[2] = 0.0f;
     }
     /// Transparency adjusting.
-    if (glfwGetKey(mWindow, GLFW_KEY_Z) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_F7) == GLFW_PRESS)
     {
         mAttractorColor[3] += COLOR_DELTA;
         if (mAttractorColor[3] > 1.0f) mAttractorColor[3] = 1.0f;
     }
-    if (glfwGetKey(mWindow, GLFW_KEY_X) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_F8) == GLFW_PRESS)
     {
         mAttractorColor[3] -= COLOR_DELTA;
         if (mAttractorColor[3] < 0.0f) mAttractorColor[3] = 0.0f;
