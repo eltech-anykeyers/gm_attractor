@@ -46,6 +46,7 @@ private:
 
     /// Attractor.
     GLfloat mAttractorTime;
+    glm::vec4 mAttractorColor;
 
     std::shared_ptr<Shader> mAttractorShader;
 

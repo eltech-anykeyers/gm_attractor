@@ -63,6 +63,7 @@ void AttractorGLApp::configure()
 
     /// Attractor.
     mAttractorTime = 1;
+    mAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     mAttractorShader = std::make_shared<Shader>("shaders/attractor.vs",
                                                 "shaders/attractor.fs");
     try
@@ -124,7 +125,7 @@ void AttractorGLApp::mainLoop()
 
         /// Attractor drawing.
         mAttractorShader->use();
-        mAttractorShader->setVec3("color", glm::vec3(1.0f, 1.0f, 1.0f));
+        mAttractorShader->setVec4("color", mAttractorColor);
         mViewMat = sCamera->getViewMatrix();
         glm::mat4 model(1.0f);
         model = glm::translate(model, glm::vec3(0.1f, 0.5f, 0.0f));
