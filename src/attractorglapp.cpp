@@ -141,6 +141,9 @@ void AttractorGLApp::mainLoop()
     glDeleteVertexArrays(1, &mAttractorArrayObject);
     glDeleteBuffers(1, &mAttractorBufferObject);
 
+    glDeleteVertexArrays(1, &mBackgroundArrayObject);
+    glDeleteBuffers(1, &mBackgroundBufferObject);
+
     terminate();
 }
 
