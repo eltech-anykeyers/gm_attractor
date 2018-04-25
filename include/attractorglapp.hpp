@@ -15,7 +15,7 @@ public:
     AttractorGLApp(GLint width, GLint height, const std::string& title);
 
 protected:
-    virtual void configure();
+    virtual void configure() override;
     virtual void mainLoop() override;
 
     virtual void setFrameBufferSizeCallback(void (* func)(GLFWwindow*, int, int)) override;
