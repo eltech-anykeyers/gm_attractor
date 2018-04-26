@@ -9,6 +9,21 @@
 #include <glm/glm.hpp>
 #include <shader.hpp>
 
+enum AttractorFilter : int
+{
+    FIRST,
+    SECOND,
+    BOTH
+};
+
+enum ColorComponent : int
+{
+    RED,
+    GREEN,
+    BLUE,
+    ALPHA
+};
+
 class AttractorGLApp : public IGLApp
 {
 public:
@@ -47,7 +62,9 @@ private:
     GLint* mBackgroundVerticesOrder;
     GLsizei mBackgroundVerticesOrderSize;
 
+    /// Attractors.
     std::shared_ptr<Shader> mAttractorShader;
+    AttractorFilter mAttractorFilter;
 
     /// First attractor.
     GLfloat mFirstAttractorTime;
