@@ -228,8 +228,9 @@ void AttractorGLApp::configureFirstAttractor()
             mFirstAttractorVertices[idx + 2] = z[outerIdx];
         }
     }
-    catch (std::runtime_error&)
+    catch (std::runtime_error& exc)
     {
+        std::cerr << exc.what() << std::endl;
         exit(-ERR_FILE_EXIST);
     }
 
@@ -266,8 +267,9 @@ void AttractorGLApp::configureSecondAttractor()
             mSecondAttractorVertices[idx + 2] = z[outerIdx];
         }
     }
-    catch (std::runtime_error&)
+    catch (std::runtime_error& exc)
     {
+        std::cerr << exc.what() << std::endl;
         exit(-ERR_FILE_EXIST);
     }
 
