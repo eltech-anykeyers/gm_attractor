@@ -131,6 +131,8 @@ void AttractorGLApp::processInputForAttractors()
         mAttractorFilter = AttractorFilter::SECOND;
     if (glfwGetKey(mWindow, GLFW_KEY_3) == GLFW_PRESS)
         mAttractorFilter = AttractorFilter::BOTH;
+
+    /// Attractors time.
     if (glfwGetKey(mWindow, GLFW_KEY_Q) == GLFW_PRESS)
         adjustAttractorTime(true);
     if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
