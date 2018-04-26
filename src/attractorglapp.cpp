@@ -62,24 +62,24 @@ void AttractorGLApp::configure()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    /// Attractor.
-    mAttractorTime = 1;
-    mAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     mAttractorShader = std::make_shared<Shader>("shaders/attractor.vs",
                                                 "shaders/attractor.fs");
+    /// First attractor.
+    mFirstAttractorTime = 1;
+    mFirstAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     try
     {
-        auto x = Utils::readPoints("res/x.txt");
-        auto y = Utils::readPoints("res/y.txt");
-        auto z = Utils::readPoints("res/z.txt");
+        auto x = Utils::readPoints("res/first/x.txt");
+        auto y = Utils::readPoints("res/first/y.txt");
+        auto z = Utils::readPoints("res/first/z.txt");
 
-        mAttractorVerticesSize = 3 * x.size();
-        mAttractorVertices = new GLfloat[mAttractorVerticesSize];
+        mFirstAttractorVerticesSize = 3 * x.size();
+        mFirstAttractorVertices = new GLfloat[mFirstAttractorVerticesSize];
         for (GLsizei idx = 0, outerIdx = 0; idx < x.size(); idx += 3, ++outerIdx)
         {
-            mAttractorVertices[idx + 0] = x[outerIdx];
-            mAttractorVertices[idx + 1] = y[outerIdx];
-            mAttractorVertices[idx + 2] = z[outerIdx];
+            mFirstAttractorVertices[idx + 0] = x[outerIdx];
+            mFirstAttractorVertices[idx + 1] = y[outerIdx];
+            mFirstAttractorVertices[idx + 2] = z[outerIdx];
         }
     }
     catch (std::runtime_error&)
@@ -87,12 +87,47 @@ void AttractorGLApp::configure()
         exit(-ERR_FILE_EXIST);
     }
 
-    glGenVertexArrays(1, &mAttractorArrayObject);
-    glGenBuffers(1, &mAttractorBufferObject);
-    glBindVertexArray(mAttractorArrayObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mAttractorBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, mAttractorVerticesSize * sizeof(GLfloat),
-                 mAttractorVertices, GL_STATIC_DRAW);
+    glGenVertexArrays(1, &mFirstAttractorArrayObject);
+    glGenBuffers(1, &mFirstAttractorBufferObject);
+    glBindVertexArray(mFirstAttractorArrayObject);
+    glBindBuffer(GL_ARRAY_BUFFER, mFirstAttractorBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, mFirstAttractorVerticesSize * sizeof(GLfloat),
+                 mFirstAttractorVertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
+                          reinterpret_cast<void*>(0));
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    /// Second attractor.
+    mSecondAttractorTime = 1;
+    mSecondAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    try
+    {
+        auto x = Utils::readPoints("res/second/x.txt");
+        auto y = Utils::readPoints("res/second/y.txt");
+        auto z = Utils::readPoints("res/second/z.txt");
+
+        mSecondAttractorVerticesSize = 3 * x.size();
+        mSecondAttractorVertices = new GLfloat[mSecondAttractorVerticesSize];
+        for (GLsizei idx = 0, outerIdx = 0; idx < x.size(); idx += 3, ++outerIdx)
+        {
+            mSecondAttractorVertices[idx + 0] = x[outerIdx];
+            mSecondAttractorVertices[idx + 1] = y[outerIdx];
+            mSecondAttractorVertices[idx + 2] = z[outerIdx];
+        }
+    }
+    catch (std::runtime_error&)
+    {
+        exit(-ERR_FILE_EXIST);
+    }
+
+    glGenVertexArrays(1, &mSecondAttractorArrayObject);
+    glGenBuffers(1, &mSecondAttractorBufferObject);
+    glBindVertexArray(mSecondAttractorArrayObject);
+    glBindBuffer(GL_ARRAY_BUFFER, mSecondAttractorBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, mSecondAttractorVerticesSize * sizeof(GLfloat),
+                 mSecondAttractorVertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
                           reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
@@ -126,23 +161,31 @@ void AttractorGLApp::mainLoop()
         glEnable(GL_DEPTH_TEST);
         glBindVertexArray(0);
 
-        /// Attractor drawing.
+        /// Attractors drawing.
         mAttractorShader->use();
-        mAttractorShader->setVec4("color", mAttractorColor);
         mViewMat = sCamera->getViewMatrix();
         glm::mat4 model(1.0f);
         model = glm::translate(model, glm::vec3(0.1f, 0.5f, 0.0f));
         setMVPViaVec(std::move(mProjectionMat * mViewMat * model));
         glLineWidth(2.0f);
-        glBindVertexArray(mAttractorArrayObject);
-        glDrawArrays(GL_LINE_STRIP, 0, mAttractorTime);
+        /// First.
+        mAttractorShader->setVec4("color", mFirstAttractorColor);
+        glBindVertexArray(mFirstAttractorArrayObject);
+        glDrawArrays(GL_LINE_STRIP, 0, mFirstAttractorTime);
+        /// Second.
+        mAttractorShader->setVec4("color", mSecondAttractorColor);
+        glBindVertexArray(mSecondAttractorArrayObject);
+        glDrawArrays(GL_LINE_STRIP, 0, mFirstAttractorTime);
         glBindVertexArray(0);
 
         glfwSwapBuffers(mWindow);
     }
 
-    glDeleteVertexArrays(1, &mAttractorArrayObject);
-    glDeleteBuffers(1, &mAttractorBufferObject);
+    glDeleteVertexArrays(1, &mSecondAttractorArrayObject);
+    glDeleteBuffers(1, &mSecondAttractorBufferObject);
+
+    glDeleteVertexArrays(1, &mFirstAttractorArrayObject);
+    glDeleteBuffers(1, &mFirstAttractorBufferObject);
 
     glDeleteVertexArrays(1, &mBackgroundArrayObject);
     glDeleteBuffers(1, &mBackgroundBufferObject);
@@ -152,7 +195,7 @@ void AttractorGLApp::mainLoop()
 
 void AttractorGLApp::terminate()
 {
-    delete[] mAttractorVertices;
+    delete[] mFirstAttractorVertices;
 
     delete[] mBackgroundVertices;
     delete[] mBackgroundVerticesOrder;
@@ -174,53 +217,53 @@ void AttractorGLApp::processInput()
     if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
         sCamera->processKeyboard(RIGHT, mFpsTimeDelta);
     if (glfwGetKey(mWindow, GLFW_KEY_Q) == GLFW_PRESS)
-        if (++mAttractorTime > MAX_TIME) mAttractorTime = MAX_TIME;
+        if (++mFirstAttractorTime > MAX_TIME) mFirstAttractorTime = MAX_TIME;
     if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
-        if (--mAttractorTime < MIN_TIME) mAttractorTime = MIN_TIME;
+        if (--mFirstAttractorTime < MIN_TIME) mFirstAttractorTime = MIN_TIME;
 
     /// Red color adjusting.
     if (glfwGetKey(mWindow, GLFW_KEY_F1) == GLFW_PRESS)
     {
-        mAttractorColor[0] += COLOR_DELTA;
-        if (mAttractorColor[0] > 1.0f) mAttractorColor[0] = 1.0f;
+        mFirstAttractorColor[0] += COLOR_DELTA;
+        if (mFirstAttractorColor[0] > 1.0f) mFirstAttractorColor[0] = 1.0f;
     }
     if (glfwGetKey(mWindow, GLFW_KEY_F2) == GLFW_PRESS)
     {
-        mAttractorColor[0] -= COLOR_DELTA;
-        if (mAttractorColor[0] < 0.0f) mAttractorColor[0] = 0.0f;
+        mFirstAttractorColor[0] -= COLOR_DELTA;
+        if (mFirstAttractorColor[0] < 0.0f) mFirstAttractorColor[0] = 0.0f;
     }
     /// Green color adjusting.
     if (glfwGetKey(mWindow, GLFW_KEY_F3) == GLFW_PRESS)
     {
-        mAttractorColor[1] += COLOR_DELTA;
-        if (mAttractorColor[1] > 1.0f) mAttractorColor[1] = 1.0f;
+        mFirstAttractorColor[1] += COLOR_DELTA;
+        if (mFirstAttractorColor[1] > 1.0f) mFirstAttractorColor[1] = 1.0f;
     }
     if (glfwGetKey(mWindow, GLFW_KEY_F4) == GLFW_PRESS)
     {
-        mAttractorColor[1] -= COLOR_DELTA;
-        if (mAttractorColor[1] < 0.0f) mAttractorColor[1] = 0.0f;
+        mFirstAttractorColor[1] -= COLOR_DELTA;
+        if (mFirstAttractorColor[1] < 0.0f) mFirstAttractorColor[1] = 0.0f;
     }
     /// Blue color adjusting.
     if (glfwGetKey(mWindow, GLFW_KEY_F5) == GLFW_PRESS)
     {
-        mAttractorColor[2] += COLOR_DELTA;
-        if (mAttractorColor[2] > 1.0f) mAttractorColor[2] = 1.0f;
+        mFirstAttractorColor[2] += COLOR_DELTA;
+        if (mFirstAttractorColor[2] > 1.0f) mFirstAttractorColor[2] = 1.0f;
     }
     if (glfwGetKey(mWindow, GLFW_KEY_F6) == GLFW_PRESS)
     {
-        mAttractorColor[2] -= COLOR_DELTA;
-        if (mAttractorColor[2] < 0.0f) mAttractorColor[2] = 0.0f;
+        mFirstAttractorColor[2] -= COLOR_DELTA;
+        if (mFirstAttractorColor[2] < 0.0f) mFirstAttractorColor[2] = 0.0f;
     }
     /// Transparency adjusting.
     if (glfwGetKey(mWindow, GLFW_KEY_F7) == GLFW_PRESS)
     {
-        mAttractorColor[3] += COLOR_DELTA;
-        if (mAttractorColor[3] > 1.0f) mAttractorColor[3] = 1.0f;
+        mFirstAttractorColor[3] += COLOR_DELTA;
+        if (mFirstAttractorColor[3] > 1.0f) mFirstAttractorColor[3] = 1.0f;
     }
     if (glfwGetKey(mWindow, GLFW_KEY_F8) == GLFW_PRESS)
     {
-        mAttractorColor[3] -= COLOR_DELTA;
-        if (mAttractorColor[3] < 0.0f) mAttractorColor[3] = 0.0f;
+        mFirstAttractorColor[3] -= COLOR_DELTA;
+        if (mFirstAttractorColor[3] < 0.0f) mFirstAttractorColor[3] = 0.0f;
     }
 }
 

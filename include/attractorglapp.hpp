@@ -47,17 +47,27 @@ private:
     GLint* mBackgroundVerticesOrder;
     GLsizei mBackgroundVerticesOrderSize;
 
-    /// Attractor.
-    GLfloat mAttractorTime;
-    glm::vec4 mAttractorColor;
-
     std::shared_ptr<Shader> mAttractorShader;
 
-    GLuint mAttractorBufferObject;
-    GLuint mAttractorArrayObject;
+    /// First attractor.
+    GLfloat mFirstAttractorTime;
+    glm::vec4 mFirstAttractorColor;
 
-    GLfloat* mAttractorVertices;
-    GLsizei mAttractorVerticesSize;
+    GLuint mFirstAttractorBufferObject;
+    GLuint mFirstAttractorArrayObject;
+
+    GLfloat* mFirstAttractorVertices;
+    GLsizei mFirstAttractorVerticesSize;
+
+    /// Second attractor.
+    GLfloat mSecondAttractorTime;
+    glm::vec4 mSecondAttractorColor;
+
+    GLuint mSecondAttractorBufferObject;
+    GLuint mSecondAttractorArrayObject;
+
+    GLfloat* mSecondAttractorVertices;
+    GLsizei mSecondAttractorVerticesSize;
 
     /// Transformations.
     glm::mat4 mProjectionMat;
