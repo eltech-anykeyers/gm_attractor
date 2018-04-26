@@ -109,6 +109,16 @@ void AttractorGLApp::processInput()
     if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(mWindow, true);
 
+    /// View transformations.
+    if (glfwGetKey(mWindow, GLFW_KEY_W) == GLFW_PRESS)
+        sCamera->processKeyboard(FORWARD, mFpsTimeDelta);
+    if (glfwGetKey(mWindow, GLFW_KEY_S) == GLFW_PRESS)
+        sCamera->processKeyboard(BACKWARD, mFpsTimeDelta);
+    if (glfwGetKey(mWindow, GLFW_KEY_A) == GLFW_PRESS)
+        sCamera->processKeyboard(LEFT, mFpsTimeDelta);
+    if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
+        sCamera->processKeyboard(RIGHT, mFpsTimeDelta);
+
     processInputForAttractors();
 }
 
@@ -121,16 +131,6 @@ void AttractorGLApp::processInputForAttractors()
         mAttractorFilter = AttractorFilter::SECOND;
     if (glfwGetKey(mWindow, GLFW_KEY_3) == GLFW_PRESS)
         mAttractorFilter = AttractorFilter::BOTH;
-
-    /// View transformations.
-    if (glfwGetKey(mWindow, GLFW_KEY_W) == GLFW_PRESS)
-        sCamera->processKeyboard(FORWARD, mFpsTimeDelta);
-    if (glfwGetKey(mWindow, GLFW_KEY_S) == GLFW_PRESS)
-        sCamera->processKeyboard(BACKWARD, mFpsTimeDelta);
-    if (glfwGetKey(mWindow, GLFW_KEY_A) == GLFW_PRESS)
-        sCamera->processKeyboard(LEFT, mFpsTimeDelta);
-    if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
-        sCamera->processKeyboard(RIGHT, mFpsTimeDelta);
     if (glfwGetKey(mWindow, GLFW_KEY_Q) == GLFW_PRESS)
         adjustAttractorTime(true);
     if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
