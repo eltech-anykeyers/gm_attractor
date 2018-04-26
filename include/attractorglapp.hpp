@@ -78,7 +78,7 @@ private:
     void configureFirstAttractor();
     void configureSecondAttractor();
 
-    void setMVPViaVec(const glm::mat4& mvp) const;
+    void setAttractorMVP(const glm::mat4& mvp) const;
 
     void processInput();
 };

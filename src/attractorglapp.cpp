@@ -67,7 +67,7 @@ void AttractorGLApp::mainLoop()
         /// Attractors drawing.
         mAttractorShader->use();
         mViewMat = sCamera->getViewMatrix();
-        setMVPViaVec(std::move(mProjectionMat * mViewMat * mModelMat));
+        setAttractorMVP(std::move(mProjectionMat * mViewMat * mModelMat));
         glLineWidth(2.0f);
         /// First.
         mAttractorShader->setVec4("color", mFirstAttractorColor);
@@ -284,7 +284,7 @@ void AttractorGLApp::configureSecondAttractor()
     glBindVertexArray(0);
 }
 
-void AttractorGLApp::setMVPViaVec(const glm::mat4& mvp) const
+void AttractorGLApp::setAttractorMVP(const glm::mat4& mvp) const
 {
     /// Only for attractor.vs.
     mAttractorShader->setVec4("trans_0", mvp[0][0], mvp[0][1], mvp[0][2], mvp[0][3]);
