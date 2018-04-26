@@ -76,7 +76,7 @@ void AttractorGLApp::mainLoop()
         /// Second.
         mAttractorShader->setVec4("color", mSecondAttractorColor);
         glBindVertexArray(mSecondAttractorArrayObject);
-        glDrawArrays(GL_LINE_STRIP, 0, mFirstAttractorTime);
+        glDrawArrays(GL_LINE_STRIP, 0, mSecondAttractorTime);
         glBindVertexArray(0);
 
         glfwSwapBuffers(mWindow);
