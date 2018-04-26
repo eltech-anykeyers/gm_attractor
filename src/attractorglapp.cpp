@@ -108,6 +108,12 @@ void AttractorGLApp::processInput()
     if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(mWindow, true);
 
+    processInputForAttractors();
+}
+
+void AttractorGLApp::processInputForAttractors()
+{
+    /// View transformations.
     if (glfwGetKey(mWindow, GLFW_KEY_W) == GLFW_PRESS)
         sCamera->processKeyboard(FORWARD, mFpsTimeDelta);
     if (glfwGetKey(mWindow, GLFW_KEY_S) == GLFW_PRESS)

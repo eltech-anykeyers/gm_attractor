@@ -98,6 +98,7 @@ private:
     void setAttractorMVP(const glm::mat4& mvp) const;
 
     void processInput();
+    void processInputForAttractors();
 };
 
 #endif // ATTRACTORGLAPP_HPP
