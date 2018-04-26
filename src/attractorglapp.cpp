@@ -24,6 +24,8 @@ void AttractorGLApp::configure()
         sCamera->processMouseMovement(xPos, yPos);
     });
 
+    mModelMat = glm::mat4(1.0f);
+
     /// Background.
     mBackgroundShader = std::make_shared<Shader>("shaders/background.vs",
                                                  "shaders/background.fs");
@@ -164,9 +166,7 @@ void AttractorGLApp::mainLoop()
         /// Attractors drawing.
         mAttractorShader->use();
         mViewMat = sCamera->getViewMatrix();
-        glm::mat4 model(1.0f);
-        model = glm::translate(model, glm::vec3(0.1f, 0.5f, 0.0f));
-        setMVPViaVec(std::move(mProjectionMat * mViewMat * model));
+        setMVPViaVec(std::move(mProjectionMat * mViewMat * mModelMat));
         glLineWidth(2.0f);
         /// First.
         mAttractorShader->setVec4("color", mFirstAttractorColor);
