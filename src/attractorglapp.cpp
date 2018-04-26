@@ -331,57 +331,44 @@ void AttractorGLApp::adjustAttractorTime(bool toIncrement)
 void AttractorGLApp::adjustAttractorColor(const ColorComponent& component,
                                           bool toIncrement)
 {
+    static auto increment = [](glm::vec4& color, const ColorComponent& component)
+    {
+        color[static_cast<int>(component)] += COLOR_DELTA;
+        if (color[static_cast<int>(component)] > 1.0f)
+            color[static_cast<int>(component)] = 1.0f;
+    };
+    static auto decrement = [](glm::vec4& color, const ColorComponent& component)
+    {
+        color[static_cast<int>(component)] -= COLOR_DELTA;
+        if (color[static_cast<int>(component)] < 0.0f)
+            color[static_cast<int>(component)] = 0.0f;
+    };
+
     if (mAttractorFilter == AttractorFilter::FIRST)
     {
         if (toIncrement)
-        {
-            mFirstAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
-            if (mFirstAttractorColor[static_cast<int>(component)] > 1.0f)
-                mFirstAttractorColor[static_cast<int>(component)] = 1.0f;
-        }
+            increment(mFirstAttractorColor, component);
         else
-        {
-            mFirstAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
-            if (mFirstAttractorColor[static_cast<int>(component)] < 0.0f)
-                mFirstAttractorColor[static_cast<int>(component)] = 0.0f;
-        }
+            decrement(mFirstAttractorColor, component);
     }
     else if (mAttractorFilter == AttractorFilter::SECOND)
     {
         if (toIncrement)
-        {
-            mSecondAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
-            if (mSecondAttractorColor[static_cast<int>(component)] > 1.0f)
-                mSecondAttractorColor[static_cast<int>(component)] = 1.0f;
-        }
+            increment(mSecondAttractorColor, component);
         else
-        {
-            mSecondAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
-            if (mSecondAttractorColor[static_cast<int>(component)] < 0.0f)
-                mSecondAttractorColor[static_cast<int>(component)] = 0.0f;
-        }
+            decrement(mSecondAttractorColor, component);
     }
     else /// Both
     {
         if (toIncrement)
         {
-            mFirstAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
-            if (mFirstAttractorColor[static_cast<int>(component)] > 1.0f)
-                mFirstAttractorColor[static_cast<int>(component)] = 1.0f;
-
-            mSecondAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
-            if (mSecondAttractorColor[static_cast<int>(component)] > 1.0f)
-                mSecondAttractorColor[static_cast<int>(component)] = 1.0f;
+            increment(mFirstAttractorColor, component);
+            increment(mSecondAttractorColor, component);
         }
         else
         {
-            mFirstAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
-            if (mFirstAttractorColor[static_cast<int>(component)] < 0.0f)
-                mFirstAttractorColor[static_cast<int>(component)] = 0.0f;
-
-            mSecondAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
-            if (mSecondAttractorColor[static_cast<int>(component)] < 0.0f)
-                mSecondAttractorColor[static_cast<int>(component)] = 0.0f;
+            decrement(mFirstAttractorColor, component);
+            decrement(mSecondAttractorColor, component);
         }
     }
 }
