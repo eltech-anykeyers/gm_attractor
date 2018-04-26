@@ -131,9 +131,9 @@ void AttractorGLApp::processInputForAttractors()
     if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
         sCamera->processKeyboard(RIGHT, mFpsTimeDelta);
     if (glfwGetKey(mWindow, GLFW_KEY_Q) == GLFW_PRESS)
-        if (++mFirstAttractorTime > MAX_TIME) mFirstAttractorTime = MAX_TIME;
+        adjustAttractorTime(true);
     if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
-        if (--mFirstAttractorTime < MIN_TIME) mFirstAttractorTime = MIN_TIME;
+        adjustAttractorTime(false);
 
     /// Color transformation.
     if (glfwGetKey(mWindow, GLFW_KEY_F1) == GLFW_PRESS)
@@ -278,6 +278,53 @@ void AttractorGLApp::setAttractorMVP(const glm::mat4& mvp) const
     mAttractorShader->setVec4("trans_1", mvp[1][0], mvp[1][1], mvp[1][2], mvp[1][3]);
     mAttractorShader->setVec4("trans_2", mvp[2][0], mvp[2][1], mvp[2][2], mvp[2][3]);
     mAttractorShader->setVec4("trans_3", mvp[3][0], mvp[3][1], mvp[3][2], mvp[3][3]);
+}
+
+void AttractorGLApp::adjustAttractorTime(bool toIncrement)
+{
+    if (mAttractorFilter == AttractorFilter::FIRST)
+    {
+        if (toIncrement)
+        {
+            if (++mFirstAttractorTime > MAX_TIME)
+                mFirstAttractorTime = MAX_TIME;
+        }
+        else
+        {
+            if (--mFirstAttractorTime < MIN_TIME)
+                mFirstAttractorTime = MIN_TIME;
+        }
+    }
+    else if (mAttractorFilter == AttractorFilter::SECOND)
+    {
+        if (toIncrement)
+        {
+            if (++mSecondAttractorTime > MAX_TIME)
+                mSecondAttractorTime = MAX_TIME;
+        }
+        else
+        {
+            if (--mSecondAttractorTime < MIN_TIME)
+                mSecondAttractorTime = MIN_TIME;
+        }
+    }
+    else /// Both.
+    {
+        if (toIncrement)
+        {
+            if (++mFirstAttractorTime > MAX_TIME)
+                mFirstAttractorTime = MAX_TIME;
+            if (++mSecondAttractorTime > MAX_TIME)
+                mSecondAttractorTime = MAX_TIME;
+        }
+        else
+        {
+            if (--mFirstAttractorTime < MIN_TIME)
+                mFirstAttractorTime = MIN_TIME;
+            if (--mSecondAttractorTime < MIN_TIME)
+                mSecondAttractorTime = MIN_TIME;
+        }
+    }
 }
 
 void AttractorGLApp::adjustAttractorColor(const ColorComponent& component,

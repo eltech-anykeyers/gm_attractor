@@ -96,6 +96,7 @@ private:
     void configureSecondAttractor();
 
     void setAttractorMVP(const glm::mat4& mvp) const;
+    void adjustAttractorTime(bool toIncrement);
     void adjustAttractorColor(const ColorComponent& component, bool toIncrement);
 
     void processInput();
