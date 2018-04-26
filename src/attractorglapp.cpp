@@ -195,6 +195,7 @@ void AttractorGLApp::mainLoop()
 
 void AttractorGLApp::terminate()
 {
+    delete[] mSecondAttractorVertices;
     delete[] mFirstAttractorVertices;
 
     delete[] mBackgroundVertices;
