@@ -6,6 +6,7 @@ std::shared_ptr<FpsManager> AttractorGLApp::sFpsManager = std::make_shared<FpsMa
 
 AttractorGLApp::AttractorGLApp(GLint width, GLint height, const std::string& title)
     : IGLApp(width, height, title)
+    , mAttractorFilter(AttractorFilter::BOTH)
 {
     configure();
 }
