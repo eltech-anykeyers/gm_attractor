@@ -135,50 +135,23 @@ void AttractorGLApp::processInputForAttractors()
     if (glfwGetKey(mWindow, GLFW_KEY_E) == GLFW_PRESS)
         if (--mFirstAttractorTime < MIN_TIME) mFirstAttractorTime = MIN_TIME;
 
-    /// Red color adjusting.
+    /// Color transformation.
     if (glfwGetKey(mWindow, GLFW_KEY_F1) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[0] += COLOR_DELTA;
-        if (mFirstAttractorColor[0] > 1.0f) mFirstAttractorColor[0] = 1.0f;
-    }
+        adjustAttractorColor(ColorComponent::RED, true);    /// INC RED.
     if (glfwGetKey(mWindow, GLFW_KEY_F2) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[0] -= COLOR_DELTA;
-        if (mFirstAttractorColor[0] < 0.0f) mFirstAttractorColor[0] = 0.0f;
-    }
-    /// Green color adjusting.
+        adjustAttractorColor(ColorComponent::RED, false);   /// DEC RED.
     if (glfwGetKey(mWindow, GLFW_KEY_F3) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[1] += COLOR_DELTA;
-        if (mFirstAttractorColor[1] > 1.0f) mFirstAttractorColor[1] = 1.0f;
-    }
+        adjustAttractorColor(ColorComponent::GREEN, true);  /// INC GREEN.
     if (glfwGetKey(mWindow, GLFW_KEY_F4) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[1] -= COLOR_DELTA;
-        if (mFirstAttractorColor[1] < 0.0f) mFirstAttractorColor[1] = 0.0f;
-    }
-    /// Blue color adjusting.
+        adjustAttractorColor(ColorComponent::GREEN, false); /// DEC GREEN.
     if (glfwGetKey(mWindow, GLFW_KEY_F5) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[2] += COLOR_DELTA;
-        if (mFirstAttractorColor[2] > 1.0f) mFirstAttractorColor[2] = 1.0f;
-    }
+        adjustAttractorColor(ColorComponent::BLUE, true);   /// INC BLUE.
     if (glfwGetKey(mWindow, GLFW_KEY_F6) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[2] -= COLOR_DELTA;
-        if (mFirstAttractorColor[2] < 0.0f) mFirstAttractorColor[2] = 0.0f;
-    }
-    /// Transparency adjusting.
+        adjustAttractorColor(ColorComponent::BLUE, false);  /// DEC BLUE.
     if (glfwGetKey(mWindow, GLFW_KEY_F7) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[3] += COLOR_DELTA;
-        if (mFirstAttractorColor[3] > 1.0f) mFirstAttractorColor[3] = 1.0f;
-    }
+        adjustAttractorColor(ColorComponent::ALPHA, true);  /// INC ALPHA.
     if (glfwGetKey(mWindow, GLFW_KEY_F8) == GLFW_PRESS)
-    {
-        mFirstAttractorColor[3] -= COLOR_DELTA;
-        if (mFirstAttractorColor[3] < 0.0f) mFirstAttractorColor[3] = 0.0f;
-    }
+        adjustAttractorColor(ColorComponent::ALPHA, false); /// DEC ALPHA.
 }
 
 void AttractorGLApp::configureBackground()
@@ -305,6 +278,64 @@ void AttractorGLApp::setAttractorMVP(const glm::mat4& mvp) const
     mAttractorShader->setVec4("trans_1", mvp[1][0], mvp[1][1], mvp[1][2], mvp[1][3]);
     mAttractorShader->setVec4("trans_2", mvp[2][0], mvp[2][1], mvp[2][2], mvp[2][3]);
     mAttractorShader->setVec4("trans_3", mvp[3][0], mvp[3][1], mvp[3][2], mvp[3][3]);
+}
+
+void AttractorGLApp::adjustAttractorColor(const ColorComponent& component,
+                                          bool toIncrement)
+{
+    if (mAttractorFilter == AttractorFilter::FIRST)
+    {
+        if (toIncrement)
+        {
+            mFirstAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
+            if (mFirstAttractorColor[static_cast<int>(component)] > 1.0f)
+                mFirstAttractorColor[static_cast<int>(component)] = 1.0f;
+        }
+        else
+        {
+            mFirstAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
+            if (mFirstAttractorColor[static_cast<int>(component)] < 0.0f)
+                mFirstAttractorColor[static_cast<int>(component)] = 0.0f;
+        }
+    }
+    else if (mAttractorFilter == AttractorFilter::SECOND)
+    {
+        if (toIncrement)
+        {
+            mSecondAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
+            if (mSecondAttractorColor[static_cast<int>(component)] > 1.0f)
+                mSecondAttractorColor[static_cast<int>(component)] = 1.0f;
+        }
+        else
+        {
+            mSecondAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
+            if (mSecondAttractorColor[static_cast<int>(component)] < 0.0f)
+                mSecondAttractorColor[static_cast<int>(component)] = 0.0f;
+        }
+    }
+    else /// Both
+    {
+        if (toIncrement)
+        {
+            mFirstAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
+            if (mFirstAttractorColor[static_cast<int>(component)] > 1.0f)
+                mFirstAttractorColor[static_cast<int>(component)] = 1.0f;
+
+            mSecondAttractorColor[static_cast<int>(component)] += COLOR_DELTA;
+            if (mSecondAttractorColor[static_cast<int>(component)] > 1.0f)
+                mSecondAttractorColor[static_cast<int>(component)] = 1.0f;
+        }
+        else
+        {
+            mFirstAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
+            if (mFirstAttractorColor[static_cast<int>(component)] < 0.0f)
+                mFirstAttractorColor[static_cast<int>(component)] = 0.0f;
+
+            mSecondAttractorColor[static_cast<int>(component)] -= COLOR_DELTA;
+            if (mSecondAttractorColor[static_cast<int>(component)] < 0.0f)
+                mSecondAttractorColor[static_cast<int>(component)] = 0.0f;
+        }
+    }
 }
 
 void AttractorGLApp::setFrameBufferSizeCallback(void (* func)(GLFWwindow*, GLint, GLint))
