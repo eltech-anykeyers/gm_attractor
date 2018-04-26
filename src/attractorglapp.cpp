@@ -82,25 +82,23 @@ void AttractorGLApp::mainLoop()
         glfwSwapBuffers(mWindow);
     }
 
-    glDeleteVertexArrays(1, &mSecondAttractorArrayObject);
-    glDeleteBuffers(1, &mSecondAttractorBufferObject);
-
-    glDeleteVertexArrays(1, &mFirstAttractorArrayObject);
-    glDeleteBuffers(1, &mFirstAttractorBufferObject);
-
-    glDeleteVertexArrays(1, &mBackgroundArrayObject);
-    glDeleteBuffers(1, &mBackgroundBufferObject);
-
     terminate();
 }
 
 void AttractorGLApp::terminate()
 {
+    glDeleteVertexArrays(1, &mSecondAttractorArrayObject);
+    glDeleteBuffers(1, &mSecondAttractorBufferObject);
     delete[] mSecondAttractorVertices;
+
+    glDeleteVertexArrays(1, &mFirstAttractorArrayObject);
+    glDeleteBuffers(1, &mFirstAttractorBufferObject);
     delete[] mFirstAttractorVertices;
 
-    delete[] mBackgroundVertices;
+    glDeleteVertexArrays(1, &mBackgroundArrayObject);
+    glDeleteBuffers(1, &mBackgroundBufferObject);
     delete[] mBackgroundVerticesOrder;
+    delete[] mBackgroundVertices;
 
     IGLApp::terminate();
 }
