@@ -287,43 +287,35 @@ void AttractorGLApp::adjustAttractorTime(bool toIncrement)
     {
         if (toIncrement)
         {
-            if (++mFirstAttractorTime > MAX_TIME)
-                mFirstAttractorTime = MAX_TIME;
+            if (++mFirstAttractorTime > MAX_TIME) mFirstAttractorTime = MAX_TIME;
         }
         else
         {
-            if (--mFirstAttractorTime < MIN_TIME)
-                mFirstAttractorTime = MIN_TIME;
+            if (--mFirstAttractorTime < MIN_TIME) mFirstAttractorTime = MIN_TIME;
         }
     }
     else if (mAttractorFilter == AttractorFilter::SECOND)
     {
         if (toIncrement)
         {
-            if (++mSecondAttractorTime > MAX_TIME)
-                mSecondAttractorTime = MAX_TIME;
+            if (++mSecondAttractorTime > MAX_TIME) mSecondAttractorTime = MAX_TIME;
         }
         else
         {
-            if (--mSecondAttractorTime < MIN_TIME)
-                mSecondAttractorTime = MIN_TIME;
+            if (--mSecondAttractorTime < MIN_TIME) mSecondAttractorTime = MIN_TIME;
         }
     }
     else /// Both.
     {
         if (toIncrement)
         {
-            if (++mFirstAttractorTime > MAX_TIME)
-                mFirstAttractorTime = MAX_TIME;
-            if (++mSecondAttractorTime > MAX_TIME)
-                mSecondAttractorTime = MAX_TIME;
+            if (++mFirstAttractorTime > MAX_TIME) mFirstAttractorTime = MAX_TIME;
+            if (++mSecondAttractorTime > MAX_TIME) mSecondAttractorTime = MAX_TIME;
         }
         else
         {
-            if (--mFirstAttractorTime < MIN_TIME)
-                mFirstAttractorTime = MIN_TIME;
-            if (--mSecondAttractorTime < MIN_TIME)
-                mSecondAttractorTime = MIN_TIME;
+            if (--mFirstAttractorTime < MIN_TIME) mFirstAttractorTime = MIN_TIME;
+            if (--mSecondAttractorTime < MIN_TIME) mSecondAttractorTime = MIN_TIME;
         }
     }
 }
