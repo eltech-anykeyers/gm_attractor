@@ -74,6 +74,10 @@ private:
     glm::mat4 mViewMat;
     glm::mat4 mModelMat;
 
+    void configureBackground();
+    void configureFirstAttractor();
+    void configureSecondAttractor();
+
     void setMVPViaVec(const glm::mat4& mvp) const;
 
     void processInput();

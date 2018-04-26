@@ -26,115 +26,16 @@ void AttractorGLApp::configure()
 
     mModelMat = glm::mat4(1.0f);
 
-    /// Background.
+    /// Shaders.
     mBackgroundShader = std::make_shared<Shader>("shaders/background.vs",
                                                  "shaders/background.fs");
-    mBackgroundVerticesSize = 36;
-    mBackgroundVertices = new GLfloat[mBackgroundVerticesSize]
-    {
-        /**  vertices  **/  /**  colors  **/
-        -1.0f,  1.0f, 0.0f, 0.7f, 0.7f, 0.7f, /// Top-left.
-         1.0f,  1.0f, 0.0f, 0.7f, 0.7f, 0.7f, /// Top-right.
-         1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f, /// Bottom-right.
-        -1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f  /// Bottom-left.
-    };
-    glGenVertexArrays(1, &mBackgroundArrayObject);
-    glGenBuffers(1, &mBackgroundBufferObject);
-    glBindVertexArray(mBackgroundArrayObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mBackgroundBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, mBackgroundVerticesSize * sizeof(GLfloat),
-                 mBackgroundVertices, GL_STATIC_DRAW);
-    glGenBuffers(1, &mBackgroundElementsBufferObject);
-
-    mBackgroundVerticesOrderSize = 6;
-    mBackgroundVerticesOrder = new int[mBackgroundVerticesOrderSize]
-    {
-        0, 1, 2, 2, 3, 0
-    };
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBackgroundElementsBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 mBackgroundVerticesOrderSize * sizeof(GLint),
-                 mBackgroundVerticesOrder, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat),
-                          reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat),
-                          reinterpret_cast<void*>(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
     mAttractorShader = std::make_shared<Shader>("shaders/attractor.vs",
                                                 "shaders/attractor.fs");
-    /// First attractor.
-    mFirstAttractorTime = 1;
-    mFirstAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    try
-    {
-        auto x = Utils::readPoints("res/first/x.txt");
-        auto y = Utils::readPoints("res/first/y.txt");
-        auto z = Utils::readPoints("res/first/z.txt");
 
-        mFirstAttractorVerticesSize = 3 * x.size();
-        mFirstAttractorVertices = new GLfloat[mFirstAttractorVerticesSize];
-        for (GLsizei idx = 0, outerIdx = 0; idx < x.size(); idx += 3, ++outerIdx)
-        {
-            mFirstAttractorVertices[idx + 0] = x[outerIdx];
-            mFirstAttractorVertices[idx + 1] = y[outerIdx];
-            mFirstAttractorVertices[idx + 2] = z[outerIdx];
-        }
-    }
-    catch (std::runtime_error&)
-    {
-        exit(-ERR_FILE_EXIST);
-    }
-
-    glGenVertexArrays(1, &mFirstAttractorArrayObject);
-    glGenBuffers(1, &mFirstAttractorBufferObject);
-    glBindVertexArray(mFirstAttractorArrayObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mFirstAttractorBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, mFirstAttractorVerticesSize * sizeof(GLfloat),
-                 mFirstAttractorVertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
-                          reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
-    /// Second attractor.
-    mSecondAttractorTime = 1;
-    mSecondAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    try
-    {
-        auto x = Utils::readPoints("res/second/x.txt");
-        auto y = Utils::readPoints("res/second/y.txt");
-        auto z = Utils::readPoints("res/second/z.txt");
-
-        mSecondAttractorVerticesSize = 3 * x.size();
-        mSecondAttractorVertices = new GLfloat[mSecondAttractorVerticesSize];
-        for (GLsizei idx = 0, outerIdx = 0; idx < x.size(); idx += 3, ++outerIdx)
-        {
-            mSecondAttractorVertices[idx + 0] = x[outerIdx];
-            mSecondAttractorVertices[idx + 1] = y[outerIdx];
-            mSecondAttractorVertices[idx + 2] = z[outerIdx];
-        }
-    }
-    catch (std::runtime_error&)
-    {
-        exit(-ERR_FILE_EXIST);
-    }
-
-    glGenVertexArrays(1, &mSecondAttractorArrayObject);
-    glGenBuffers(1, &mSecondAttractorBufferObject);
-    glBindVertexArray(mSecondAttractorArrayObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mSecondAttractorBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, mSecondAttractorVerticesSize * sizeof(GLfloat),
-                 mSecondAttractorVertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
-                          reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    /// Vertices.
+    configureBackground();
+    configureFirstAttractor();
+    configureSecondAttractor();
 
     /// Transformation matrices.
     mProjectionMat = glm::perspective(glm::radians(mFieldOfView),
@@ -266,6 +167,121 @@ void AttractorGLApp::processInput()
         mFirstAttractorColor[3] -= COLOR_DELTA;
         if (mFirstAttractorColor[3] < 0.0f) mFirstAttractorColor[3] = 0.0f;
     }
+}
+
+void AttractorGLApp::configureBackground()
+{
+    /// Background.
+    mBackgroundVerticesSize = 36;
+    mBackgroundVertices = new GLfloat[mBackgroundVerticesSize]
+    {
+        /**  vertices  **/  /**  colors  **/
+        -1.0f,  1.0f, 0.0f, 0.7f, 0.7f, 0.7f, /// Top-left.
+         1.0f,  1.0f, 0.0f, 0.7f, 0.7f, 0.7f, /// Top-right.
+         1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f, /// Bottom-right.
+        -1.0f, -1.0f, 0.0f, 0.2f, 0.2f, 0.2f  /// Bottom-left.
+    };
+    glGenVertexArrays(1, &mBackgroundArrayObject);
+    glGenBuffers(1, &mBackgroundBufferObject);
+    glBindVertexArray(mBackgroundArrayObject);
+    glBindBuffer(GL_ARRAY_BUFFER, mBackgroundBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, mBackgroundVerticesSize * sizeof(GLfloat),
+                 mBackgroundVertices, GL_STATIC_DRAW);
+    glGenBuffers(1, &mBackgroundElementsBufferObject);
+
+    mBackgroundVerticesOrderSize = 6;
+    mBackgroundVerticesOrder = new int[mBackgroundVerticesOrderSize]
+    {
+        0, 1, 2, 2, 3, 0
+    };
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBackgroundElementsBufferObject);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                 mBackgroundVerticesOrderSize * sizeof(GLint),
+                 mBackgroundVerticesOrder, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat),
+                          reinterpret_cast<void*>(0));
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat),
+                          reinterpret_cast<void*>(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+void AttractorGLApp::configureFirstAttractor()
+{
+    /// First attractor.
+    mFirstAttractorTime = 1;
+    mFirstAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    try
+    {
+        auto x = Utils::readPoints("res/first/x.txt");
+        auto y = Utils::readPoints("res/first/y.txt");
+        auto z = Utils::readPoints("res/first/z.txt");
+
+        mFirstAttractorVerticesSize = 3 * x.size();
+        mFirstAttractorVertices = new GLfloat[mFirstAttractorVerticesSize];
+        for (GLsizei idx = 0, outerIdx = 0; idx < x.size(); idx += 3, ++outerIdx)
+        {
+            mFirstAttractorVertices[idx + 0] = x[outerIdx];
+            mFirstAttractorVertices[idx + 1] = y[outerIdx];
+            mFirstAttractorVertices[idx + 2] = z[outerIdx];
+        }
+    }
+    catch (std::runtime_error&)
+    {
+        exit(-ERR_FILE_EXIST);
+    }
+
+    glGenVertexArrays(1, &mFirstAttractorArrayObject);
+    glGenBuffers(1, &mFirstAttractorBufferObject);
+    glBindVertexArray(mFirstAttractorArrayObject);
+    glBindBuffer(GL_ARRAY_BUFFER, mFirstAttractorBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, mFirstAttractorVerticesSize * sizeof(GLfloat),
+                 mFirstAttractorVertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
+                          reinterpret_cast<void*>(0));
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+void AttractorGLApp::configureSecondAttractor()
+{
+    /// Second attractor.
+    mSecondAttractorTime = 1;
+    mSecondAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    try
+    {
+        auto x = Utils::readPoints("res/second/x.txt");
+        auto y = Utils::readPoints("res/second/y.txt");
+        auto z = Utils::readPoints("res/second/z.txt");
+
+        mSecondAttractorVerticesSize = 3 * x.size();
+        mSecondAttractorVertices = new GLfloat[mSecondAttractorVerticesSize];
+        for (GLsizei idx = 0, outerIdx = 0; idx < x.size(); idx += 3, ++outerIdx)
+        {
+            mSecondAttractorVertices[idx + 0] = x[outerIdx];
+            mSecondAttractorVertices[idx + 1] = y[outerIdx];
+            mSecondAttractorVertices[idx + 2] = z[outerIdx];
+        }
+    }
+    catch (std::runtime_error&)
+    {
+        exit(-ERR_FILE_EXIST);
+    }
+
+    glGenVertexArrays(1, &mSecondAttractorArrayObject);
+    glGenBuffers(1, &mSecondAttractorBufferObject);
+    glBindVertexArray(mSecondAttractorArrayObject);
+    glBindBuffer(GL_ARRAY_BUFFER, mSecondAttractorBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, mSecondAttractorVerticesSize * sizeof(GLfloat),
+                 mSecondAttractorVertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
+                          reinterpret_cast<void*>(0));
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void AttractorGLApp::setMVPViaVec(const glm::mat4& mvp) const
