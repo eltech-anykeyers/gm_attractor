@@ -14,6 +14,7 @@ void AttractorGLApp::configure()
 {
     IGLApp::configure();
 
+    /// Callbacks.
     setFrameBufferSizeCallback([](GLFWwindow*, GLint width, GLint height)
     {
         glViewport(0, 0, width, height);
@@ -23,8 +24,6 @@ void AttractorGLApp::configure()
     {
         sCamera->processMouseMovement(xPos, yPos);
     });
-
-    mModelMat = glm::mat4(1.0f);
 
     /// Shaders.
     mBackgroundShader = std::make_shared<Shader>("shaders/background.vs",
@@ -43,6 +42,7 @@ void AttractorGLApp::configure()
                                       static_cast<GLfloat>(mWindowHeight),
                                       mNearDistance, mFarDistance);
     mViewMat = sCamera->getViewMatrix();
+    mModelMat = glm::mat4(1.0f);
 }
 
 void AttractorGLApp::mainLoop()
