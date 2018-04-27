@@ -27,10 +27,10 @@ void AttractorGLApp::configure()
     });
 
     /// Shaders.
-    mBackgroundShader = std::make_shared<Shader>("shaders/background.vs",
-                                                 "shaders/background.fs");
-    mAttractorShader = std::make_shared<Shader>("shaders/attractor.vs",
-                                                "shaders/attractor.fs");
+    mBackgroundShader = std::make_shared<Shader>("shaders/background/vert.glsl",
+                                                 "shaders/background/frag.glsl");
+    mAttractorShader = std::make_shared<Shader>("shaders/attractor/vert.glsl",
+                                                "shaders/attractor/frag.glsl");
 
     /// Models configuration
     configureBackground();
