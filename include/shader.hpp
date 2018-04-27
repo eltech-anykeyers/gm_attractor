@@ -64,6 +64,8 @@ public:
         glAttachShader(mID, fragment);
         glLinkProgram(mID);
         checkCompileErrors(mID, SHADER_TYPE::PROGRAM);
+        glDetachShader(mID, vertex);
+        glDetachShader(mID, fragment);
 
         /**
          * Delete the shaders as they're linked into our program now
