@@ -13,7 +13,8 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}/glad.c
     ${SOURCES}/iglapp.cpp
     ${SOURCES}/attractorglapp.cpp
-    ${SOURCES}/utils.cpp)
+    ${SOURCES}/utils.cpp
+    ${SOURCES}/shader.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})
 
 # GLM
