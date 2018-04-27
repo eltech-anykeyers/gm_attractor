@@ -32,7 +32,7 @@ void AttractorGLApp::configure()
     mAttractorShader = std::make_shared<Shader>("shaders/attractor.vs",
                                                 "shaders/attractor.fs");
 
-    /// Vertices.
+    /// Models configuration
     configureBackground();
     configureFirstAttractor();
     configureSecondAttractor();
@@ -56,14 +56,8 @@ void AttractorGLApp::mainLoop()
         processInput();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        /// Background drawing.
-        mBackgroundShader->use();
-        glBindVertexArray(mBackgroundArrayObject);
-        glDisable(GL_DEPTH_TEST);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glEnable(GL_DEPTH_TEST);
-        glBindVertexArray(0);
+        drawBackgroundGradient(glm::vec3(0.5f, 0.5f, 0.5f),
+                               glm::vec3(0.2f, 0.2f, 0.2f));
 
         /// Attractors drawing.
         mAttractorShader->use();
@@ -97,10 +91,6 @@ void AttractorGLApp::terminate()
     delete[] mFirstAttractorVertices;
 
     glDeleteVertexArrays(1, &mBackgroundArrayObject);
-    glDeleteBuffers(1, &mBackgroundBufferObject);
-    delete[] mBackgroundVerticesOrder;
-    delete[] mBackgroundVertices;
-
     IGLApp::terminate();
 }
 
@@ -160,40 +150,7 @@ void AttractorGLApp::processInputForAttractors()
 void AttractorGLApp::configureBackground()
 {
     /// Background.
-    mBackgroundVerticesSize = 36;
-    mBackgroundVertices = new GLfloat[mBackgroundVerticesSize]
-    {
-        /**  vertices  **/  /**  colors  **/
-        -1.0f,  1.0f, 0.0f, 0.4f, 0.4f, 0.4f, /// Top-left.
-         1.0f,  1.0f, 0.0f, 0.4f, 0.4f, 0.4f, /// Top-right.
-         1.0f, -1.0f, 0.0f, 0.1f, 0.1f, 0.1f, /// Bottom-right.
-        -1.0f, -1.0f, 0.0f, 0.1f, 0.1f, 0.1f  /// Bottom-left.
-    };
     glGenVertexArrays(1, &mBackgroundArrayObject);
-    glGenBuffers(1, &mBackgroundBufferObject);
-    glBindVertexArray(mBackgroundArrayObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mBackgroundBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, mBackgroundVerticesSize * sizeof(GLfloat),
-                 mBackgroundVertices, GL_STATIC_DRAW);
-    glGenBuffers(1, &mBackgroundElementsBufferObject);
-
-    mBackgroundVerticesOrderSize = 6;
-    mBackgroundVerticesOrder = new int[mBackgroundVerticesOrderSize]
-    {
-        0, 1, 2, 2, 3, 0
-    };
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBackgroundElementsBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 mBackgroundVerticesOrderSize * sizeof(GLint),
-                 mBackgroundVerticesOrder, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat),
-                          reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat),
-                          reinterpret_cast<void*>(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
 }
 
 void AttractorGLApp::configureFirstAttractor()
@@ -365,6 +322,19 @@ void AttractorGLApp::adjustAttractorColor(const ColorComponent& component,
             decrement(mSecondAttractorColor, component);
         }
     }
+}
+
+void AttractorGLApp::drawBackgroundGradient(glm::vec3 topColor, glm::vec3 bottomColor)
+{
+    mBackgroundShader->use();
+    mBackgroundShader->setVec3("top_color", topColor);
+    mBackgroundShader->setVec3("bot_color", bottomColor);
+    glDisable(GL_DEPTH_TEST);
+    glBindVertexArray(mBackgroundArrayObject);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindVertexArray(0);
+    glEnable(GL_DEPTH_TEST);
+    return;
 }
 
 void AttractorGLApp::setFrameBufferSizeCallback(void (* func)(GLFWwindow*, GLint, GLint))

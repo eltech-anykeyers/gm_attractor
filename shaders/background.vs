@@ -1,12 +1,10 @@
 #version 330 core
 
-layout (location = 0) in vec3 in_pos;
-layout (location = 1) in vec3 in_color;
-
-out vec3 color;
+out vec2 bg_vertex;
 
 void main()
 {
-    gl_Position = vec4(in_pos, 1.0f);
-    color = in_color;
+    uint idx = uint( gl_VertexID );
+    gl_Position = vec4( idx & 1U, idx >> 1U, 0.0, 0.5 ) * 4.0 - 1.0;
+    bg_vertex = vec2( gl_Position.xy * 0.5 + 0.5 );
 }

@@ -53,14 +53,7 @@ private:
     /// Background.
     std::shared_ptr<Shader> mBackgroundShader;
 
-    GLuint mBackgroundBufferObject;
-    GLuint mBackgroundElementsBufferObject;
     GLuint mBackgroundArrayObject;
-
-    GLfloat* mBackgroundVertices;
-    GLsizei mBackgroundVerticesSize;
-    GLint* mBackgroundVerticesOrder;
-    GLsizei mBackgroundVerticesOrderSize;
 
     /// Attractors.
     std::shared_ptr<Shader> mAttractorShader;
@@ -101,6 +94,8 @@ private:
 
     void processInput();
     void processInputForAttractors();
+
+    void drawBackgroundGradient(glm::vec3 topColor, glm::vec3 bottomColor);
 };
 
 #endif // ATTRACTORGLAPP_HPP
