@@ -17,7 +17,11 @@
 # Qt Creator backups
 *.autosave
 
+
 ### Vim ###
+# Local configs
+.vimrc
+
 # Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
@@ -34,6 +38,7 @@ Session.vim
 # Auto-generated tag files
 tags
 
+
 ### CMake ###
 CMakeLists.txt.user
 CMakeCache.txt
@@ -47,6 +52,7 @@ compile_commands.json
 CTestTestfile.cmake
 build
 AttractorViewer*
+
 
 ### C++ ###
 # Prerequisites
@@ -81,3 +87,8 @@ AttractorViewer*
 *.exe
 *.out
 *.app
+
+
+### Project ###
+# Random stuff
+TODO
