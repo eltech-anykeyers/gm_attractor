@@ -1,6 +1,3 @@
-#include <fstream>
-#include <stdexcept>
-
 #include <utils.hpp>
 
 std::vector<double> Utils::readPoints(std::string fileName)
