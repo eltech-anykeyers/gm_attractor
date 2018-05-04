@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 set(LIBS libs)
 set(SOURCES src)
 set(INCLUDE_DIRECTORIES include)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 project(AttractorViewer)
 
@@ -14,7 +14,11 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}/iglapp.cpp
     ${SOURCES}/attractorglapp.cpp
     ${SOURCES}/utils.cpp
-    ${SOURCES}/shader.cpp)
+    ${SOURCES}/shader.cpp
+    ${SOURCES}/glmodel.cpp
+    ${SOURCES}/attractormodel.cpp
+    ${SOURCES}/fpsmanager.cpp
+    ${SOURCES}/camera.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})
 
 # GLM
