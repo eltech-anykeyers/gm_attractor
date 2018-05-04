@@ -8,6 +8,9 @@
 #include <fpsmanager.hpp>
 #include <glm/glm.hpp>
 #include <shader.hpp>
+#include <attractormodel.hpp>
+
+#include <utils.hpp>
 
 enum AttractorFilter : int
 {
@@ -52,7 +55,6 @@ private:
 
     /// Background.
     std::shared_ptr<Shader> mBackgroundShader;
-
     GLuint mBackgroundArrayObject;
 
     /// Attractors.
@@ -62,31 +64,23 @@ private:
     /// First attractor.
     GLfloat mFirstAttractorTime;
     glm::vec4 mFirstAttractorColor;
-
-    GLuint mFirstAttractorBufferObject;
-    GLuint mFirstAttractorArrayObject;
-
-    GLfloat* mFirstAttractorVertices;
-    GLsizei mFirstAttractorVerticesSize;
+    std::unique_ptr<AttractorModel> mFirstAttractor;
 
     /// Second attractor.
     GLfloat mSecondAttractorTime;
     glm::vec4 mSecondAttractorColor;
-
-    GLuint mSecondAttractorBufferObject;
-    GLuint mSecondAttractorArrayObject;
-
-    GLfloat* mSecondAttractorVertices;
-    GLsizei mSecondAttractorVerticesSize;
+    std::unique_ptr<AttractorModel> mSecondAttractor;
 
     /// Transformations.
     glm::mat4 mProjectionMat;
-    glm::mat4 mViewMat;
-    glm::mat4 mModelMat;
 
     void configureBackground();
-    void configureFirstAttractor();
-    void configureSecondAttractor();
+
+    std::vector<glm::vec2> readSectionVertices(std::string xFile,
+                                               std::string yFile);
+    std::vector<glm::vec3> readAttractorVertices(std::string xFile,
+                                                 std::string yFile,
+                                                 std::string zFile);
 
     void setAttractorMVP(const glm::mat4& mvp) const;
     void adjustAttractorTime(bool toIncrement);
@@ -95,7 +89,10 @@ private:
     void processInput();
     void processInputForAttractors();
 
-    void drawBackgroundGradient(glm::vec3 topColor, glm::vec3 bottomColor);
+    /// Drawing.
+    void drawBackgroundGradient(const glm::vec3& topColor,
+                                const glm::vec3& bottomColor
+                               ) const;
 };
 
 #endif // ATTRACTORGLAPP_HPP
