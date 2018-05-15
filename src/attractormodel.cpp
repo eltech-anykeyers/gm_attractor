@@ -9,7 +9,7 @@ AttractorModel::AttractorModel(std::vector<glm::vec3> vertices,
     mNSectionVertices = mSectionVertices.size();
 
     mRadius  = DFLT_RADIUS;
-    mColor   = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    mColor   = glm::vec4(1.0f, 1.0f, 1.0f, 0.33f);
 
     configure();
 }
