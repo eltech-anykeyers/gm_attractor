@@ -37,7 +37,6 @@ void AttractorGLApp::configure()
 
     /// First attractor.
     mFirstAttractorTime = 0;
-    mFirstAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     mFirstAttractor = std::make_unique<AttractorModel>(
             readAttractorVertices(trajectoriesDir + "coullet_1/x.txt",
                                   trajectoriesDir + "coullet_1/y.txt",
@@ -49,7 +48,6 @@ void AttractorGLApp::configure()
 
     /// Second attractor.
     mSecondAttractorTime = 0;
-    mSecondAttractorColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     mSecondAttractor = std::make_unique<AttractorModel>(
             readAttractorVertices(trajectoriesDir + "coullet_2/x.txt",
                                   trajectoriesDir + "coullet_2/y.txt",
@@ -85,8 +83,6 @@ void AttractorGLApp::mainLoop()
 
         /// Attractors.
         glm::mat4 projViewMat = mProjectionMat * sCamera->getViewMatrix();
-        mFirstAttractor->setColor(mFirstAttractorColor);
-        mSecondAttractor->setColor(mSecondAttractorColor);
         mFirstAttractor->draw(projViewMat, 0, mFirstAttractorTime);
         mSecondAttractor->draw(projViewMat, 0, mSecondAttractorTime);
 
@@ -258,44 +254,52 @@ void AttractorGLApp::adjustAttractorTime(bool toIncrement)
 void AttractorGLApp::adjustAttractorColor(const ColorComponent& component,
                                           bool toIncrement)
 {
-    static auto increment = [](glm::vec4& color, const ColorComponent& component)
+    static auto increment = [](AttractorModel& model, const ColorComponent& component)
     {
+        auto color = model.getColor();
+
         color[static_cast<int>(component)] += COLOR_DELTA;
         if (color[static_cast<int>(component)] > 1.0f)
             color[static_cast<int>(component)] = 1.0f;
+
+        model.setColor(color);
     };
-    static auto decrement = [](glm::vec4& color, const ColorComponent& component)
+    static auto decrement = [](AttractorModel& model, const ColorComponent& component)
     {
+        auto color = model.getColor();
+
         color[static_cast<int>(component)] -= COLOR_DELTA;
         if (color[static_cast<int>(component)] < 0.0f)
             color[static_cast<int>(component)] = 0.0f;
+
+        model.setColor(color);
     };
 
     if (mAttractorFilter == AttractorFilter::FIRST)
     {
         if (toIncrement)
-            increment(mFirstAttractorColor, component);
+            increment(*mFirstAttractor, component);
         else
-            decrement(mFirstAttractorColor, component);
+            decrement(*mFirstAttractor, component);
     }
     else if (mAttractorFilter == AttractorFilter::SECOND)
     {
         if (toIncrement)
-            increment(mSecondAttractorColor, component);
+            increment(*mSecondAttractor, component);
         else
-            decrement(mSecondAttractorColor, component);
+            decrement(*mSecondAttractor, component);
     }
     else /// Both
     {
         if (toIncrement)
         {
-            increment(mFirstAttractorColor, component);
-            increment(mSecondAttractorColor, component);
+            increment(*mFirstAttractor, component);
+            increment(*mSecondAttractor, component);
         }
         else
         {
-            decrement(mFirstAttractorColor, component);
-            decrement(mSecondAttractorColor, component);
+            decrement(*mFirstAttractor, component);
+            decrement(*mSecondAttractor, component);
         }
     }
 }

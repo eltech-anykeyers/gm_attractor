@@ -63,12 +63,10 @@ private:
 
     /// First attractor.
     GLfloat mFirstAttractorTime;
-    glm::vec4 mFirstAttractorColor;
     std::unique_ptr<AttractorModel> mFirstAttractor;
 
     /// Second attractor.
     GLfloat mSecondAttractorTime;
-    glm::vec4 mSecondAttractorColor;
     std::unique_ptr<AttractorModel> mSecondAttractor;
 
     /// Transformations.
