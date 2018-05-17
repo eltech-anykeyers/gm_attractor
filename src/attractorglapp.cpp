@@ -168,7 +168,7 @@ std::vector<glm::vec3> AttractorGLApp::readAttractorVertices(
         auto z = Utils::readPoints(zFile);
 
         for ( GLsizei i = 0; i < x.size(); i++ )
-            vertices.push_back(std::move(glm::vec3(x[i], y[i], z[i])));
+            vertices.emplace_back(x[i], y[i], z[i]);
 
         return vertices;
     }
