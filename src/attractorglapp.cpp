@@ -29,8 +29,6 @@ void AttractorGLApp::configure()
     /// Shaders.
     mBackgroundShader = std::make_shared<Shader>("shaders/background/vert.glsl",
                                                  "shaders/background/frag.glsl");
-    mAttractorShader = std::make_shared<Shader>("shaders/attractor/vert.glsl",
-                                                "shaders/attractor/frag.glsl");
 
     std::string trajectoriesDir = "res/attractors_data/trajectories/";
     std::string sectionsDir     = "res/attractors_data/section_shapes/";
@@ -201,15 +199,6 @@ std::vector<glm::vec2> AttractorGLApp::readSectionVertices(
         std::cerr << exc.what() << std::endl;
         exit(-ERR_FILE_EXIST);
     }
-}
-
-void AttractorGLApp::setAttractorMVP(const glm::mat4& mvp) const
-{
-    /// Only for attractor.vs.
-    mAttractorShader->setVec4("trans_0", mvp[0][0], mvp[0][1], mvp[0][2], mvp[0][3]);
-    mAttractorShader->setVec4("trans_1", mvp[1][0], mvp[1][1], mvp[1][2], mvp[1][3]);
-    mAttractorShader->setVec4("trans_2", mvp[2][0], mvp[2][1], mvp[2][2], mvp[2][3]);
-    mAttractorShader->setVec4("trans_3", mvp[3][0], mvp[3][1], mvp[3][2], mvp[3][3]);
 }
 
 void AttractorGLApp::adjustAttractorTime(bool toIncrement)

@@ -57,8 +57,6 @@ private:
     std::shared_ptr<Shader> mBackgroundShader;
     GLuint mBackgroundArrayObject;
 
-    /// Attractors.
-    std::shared_ptr<Shader> mAttractorShader;
     AttractorFilter mAttractorFilter;
 
     /// First attractor.
@@ -80,7 +78,6 @@ private:
                                                  std::string yFile,
                                                  std::string zFile);
 
-    void setAttractorMVP(const glm::mat4& mvp) const;
     void adjustAttractorTime(bool toIncrement);
     void adjustAttractorColor(const ColorComponent& component, bool toIncrement);
 
