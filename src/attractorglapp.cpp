@@ -42,7 +42,6 @@ void AttractorGLApp::configureApp()
             readSectionVertices(sectionsDir + "heart/x.txt",
                                 sectionsDir + "heart/y.txt"));
     mFirstAttractor->setRadius(0.07f);
-    mFirstAttractor->moveTo(glm::vec3(1.0f, 0.0f, 0.0f));
 
     /// Second attractor.
     mSecondAttractorTime = 0;
@@ -53,7 +52,6 @@ void AttractorGLApp::configureApp()
             readSectionVertices(sectionsDir + "square/x.txt",
                                 sectionsDir + "square/y.txt"));
     mSecondAttractor->setRadius(0.07f);
-    mSecondAttractor->moveTo(glm::vec3(-1.0f, 0.0f, 0.0f));
 
     /// Background.
     configureBackground();
