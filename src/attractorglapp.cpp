@@ -40,21 +40,31 @@ void AttractorGLApp::configureApp()
     /// First attractor.
     mFirstAttractorTime = 0;
     mFirstAttractor = std::make_unique<AttractorModel>(
-            readAttractorVertices(trajectoriesDir + "coullet_1/x.txt",
-                                  trajectoriesDir + "coullet_1/y.txt",
-                                  trajectoriesDir + "coullet_1/z.txt"),
-            readSectionVertices(sectionsDir + "heart/x.txt",
-                                sectionsDir + "heart/y.txt"));
+            readAttractorVertices(trajectoriesDir +
+                                      mFirstAttractorTrajectory + "x.txt",
+                                  trajectoriesDir +
+                                      mFirstAttractorTrajectory + "y.txt",
+                                  trajectoriesDir +
+                                      mFirstAttractorTrajectory + "z.txt"),
+            readSectionVertices(sectionsDir +
+                                    mFirstAttractorSection + "x.txt",
+                                sectionsDir +
+                                    mFirstAttractorSection + "y.txt"));
     mFirstAttractor->setRadius(0.07f);
 
     /// Second attractor.
     mSecondAttractorTime = 0;
     mSecondAttractor = std::make_unique<AttractorModel>(
-            readAttractorVertices(trajectoriesDir + "coullet_2/x.txt",
-                                  trajectoriesDir + "coullet_2/y.txt",
-                                  trajectoriesDir + "coullet_2/z.txt"),
-            readSectionVertices(sectionsDir + "square/x.txt",
-                                sectionsDir + "square/y.txt"));
+            readAttractorVertices(trajectoriesDir +
+                                      mSecondAttractorTrajectory + "x.txt",
+                                  trajectoriesDir +
+                                      mSecondAttractorTrajectory + "y.txt",
+                                  trajectoriesDir +
+                                      mSecondAttractorTrajectory + "z.txt"),
+            readSectionVertices(sectionsDir +
+                                    mSecondAttractorSection + "x.txt",
+                                sectionsDir +
+                                    mSecondAttractorSection + "y.txt"));
     mSecondAttractor->setRadius(0.07f);
 
     /// Background.
