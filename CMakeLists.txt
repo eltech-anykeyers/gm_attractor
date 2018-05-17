@@ -30,3 +30,5 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(${LIBS}/glfw)
 target_link_libraries(${PROJECT_NAME} glfw)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-static" )
