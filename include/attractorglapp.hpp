@@ -33,7 +33,7 @@ public:
     AttractorGLApp(GLint width, GLint height, const std::string& title);
 
 protected:
-    virtual void configure() override;
+    virtual void configureApp() override;
     virtual void mainLoop() override;
     virtual void terminate() override;
 

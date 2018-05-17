@@ -25,7 +25,6 @@ IGLApp::IGLApp(GLint width, GLint height, const std::string& title)
     , mFarDistance(DEFAULT_FAR_DISTANCE)
 {
     init();
-    configure();
 }
 
 void IGLApp::init()
@@ -34,7 +33,10 @@ void IGLApp::init()
     {
         throw std::runtime_error(GLFW_INIT_FAILED_MSG);
     }
+}
 
+void IGLApp::initWindow()
+{
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -56,7 +58,7 @@ void IGLApp::init()
     glViewport(0, 0, mWindowWidth, mWindowHeight);
 }
 
-void IGLApp::configure()
+void IGLApp::configureApp()
 {
     glEnable(GL_DEPTH_TEST);
 
@@ -68,6 +70,9 @@ void IGLApp::configure()
 
 void IGLApp::run()
 {
+    initWindow();
+    configureApp();
+
     mainLoop();
 }
 

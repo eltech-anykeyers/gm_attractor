@@ -8,12 +8,12 @@ AttractorGLApp::AttractorGLApp(
     : IGLApp(width, height, title)
     , mAttractorFilter(AttractorFilter::BOTH)
 {
-    configure();
+
 }
 
-void AttractorGLApp::configure()
+void AttractorGLApp::configureApp()
 {
-    IGLApp::configure();
+    IGLApp::configureApp();
 
     /// Callbacks.
     setFrameBufferSizeCallback([](GLFWwindow*, GLint width, GLint height)

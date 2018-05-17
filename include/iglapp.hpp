@@ -44,7 +44,8 @@ protected:
     GLfloat mFarDistance;
 
     virtual void init();
-    virtual void configure();
+    virtual void initWindow();
+    virtual void configureApp();
     virtual void terminate();
 
     virtual void mainLoop() = 0;
