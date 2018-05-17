@@ -48,13 +48,13 @@ private:
 
     constexpr static const GLfloat COLOR_DELTA = 0.001f;
 
-    static std::shared_ptr<Camera> sCamera;
+    static std::unique_ptr<Camera> sCamera;
 
     GLfloat mFpsTimeDelta;
-    static std::shared_ptr<FpsManager> sFpsManager;
+    static std::unique_ptr<FpsManager> sFpsManager;
 
     /// Background.
-    std::shared_ptr<Shader> mBackgroundShader;
+    std::unique_ptr<Shader> mBackgroundShader;
     GLuint mBackgroundArrayObject;
 
     AttractorFilter mAttractorFilter;

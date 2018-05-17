@@ -1,7 +1,7 @@
 #include <attractorglapp.hpp>
 
-std::shared_ptr<Camera> AttractorGLApp::sCamera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 10.0f));
-std::shared_ptr<FpsManager> AttractorGLApp::sFpsManager = std::make_shared<FpsManager>();
+std::unique_ptr<Camera> AttractorGLApp::sCamera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 10.0f));
+std::unique_ptr<FpsManager> AttractorGLApp::sFpsManager = std::make_unique<FpsManager>();
 
 AttractorGLApp::AttractorGLApp(
         GLint width, GLint height, const std::string& title)
@@ -27,7 +27,7 @@ void AttractorGLApp::configure()
     });
 
     /// Shaders.
-    mBackgroundShader = std::make_shared<Shader>("shaders/background/vert.glsl",
+    mBackgroundShader = std::make_unique<Shader>("shaders/background/vert.glsl",
                                                  "shaders/background/frag.glsl");
 
     std::string trajectoriesDir = "res/attractors_data/trajectories/";
