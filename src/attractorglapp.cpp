@@ -7,6 +7,10 @@ AttractorGLApp::AttractorGLApp(
         GLint width, GLint height, const std::string& title)
     : IGLApp(width, height, title)
     , mAttractorFilter(AttractorFilter::BOTH)
+    , mFirstAttractorTrajectory("coullet_1/")
+    , mFirstAttractorSection("heart/")
+    , mSecondAttractorTrajectory("coullet_2/")
+    , mSecondAttractorSection("square/")
 {
 
 }
@@ -302,6 +306,46 @@ void AttractorGLApp::drawBackgroundGradient(const glm::vec3& topColor, const glm
     glBindVertexArray(0);
     glEnable(GL_DEPTH_TEST);
     return;
+}
+
+std::string AttractorGLApp::firstAttractorTrajectory()
+{
+    return mFirstAttractorTrajectory;
+}
+
+void AttractorGLApp::setFirstAttractorTrajectory(std::string dir)
+{
+    mFirstAttractorTrajectory = dir;
+}
+
+std::string AttractorGLApp::firstAttractorSection()
+{
+    return mFirstAttractorSection;
+}
+
+void AttractorGLApp::setFirstAttractorSection(std::string dir)
+{
+    mFirstAttractorSection = dir;
+}
+
+std::string AttractorGLApp::secondAttractorTrajectory()
+{
+    return mSecondAttractorTrajectory;
+}
+
+void AttractorGLApp::setSecondAttractorTrajectory(std::string dir)
+{
+    mSecondAttractorTrajectory = dir;
+}
+
+std::string AttractorGLApp::secondAttractorSection()
+{
+    return mSecondAttractorSection;
+}
+
+void AttractorGLApp::setSecondAttractorSection(std::string dir)
+{
+    mSecondAttractorSection = dir;
 }
 
 void AttractorGLApp::setFrameBufferSizeCallback(void (* func)(GLFWwindow*, GLint, GLint))

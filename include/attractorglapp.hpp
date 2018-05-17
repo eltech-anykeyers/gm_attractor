@@ -32,6 +32,18 @@ class AttractorGLApp : public IGLApp
 public:
     AttractorGLApp(GLint width, GLint height, const std::string& title);
 
+    std::string firstAttractorTrajectory();
+    void setFirstAttractorTrajectory(std::string dir);
+
+    std::string firstAttractorSection();
+    void setFirstAttractorSection(std::string dir);
+
+    std::string secondAttractorTrajectory();
+    void setSecondAttractorTrajectory(std::string dir);
+
+    std::string secondAttractorSection();
+    void setSecondAttractorSection(std::string dir);
+
 protected:
     virtual void configureApp() override;
     virtual void mainLoop() override;
@@ -62,10 +74,14 @@ private:
     /// First attractor.
     GLfloat mFirstAttractorTime;
     std::unique_ptr<AttractorModel> mFirstAttractor;
+    std::string mFirstAttractorTrajectory;
+    std::string mFirstAttractorSection;
 
     /// Second attractor.
     GLfloat mSecondAttractorTime;
     std::unique_ptr<AttractorModel> mSecondAttractor;
+    std::string mSecondAttractorTrajectory;
+    std::string mSecondAttractorSection;
 
     /// Transformations.
     glm::mat4 mProjectionMat;
