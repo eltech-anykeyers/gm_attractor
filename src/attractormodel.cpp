@@ -80,6 +80,11 @@ void AttractorModel::clearVertexData()
     mSegmentsVbos.clear();
 }
 
+const std::vector<glm::vec3>& AttractorModel::getTrajectoryVertices() const
+{
+    return mTrajectoryVertices;
+}
+
 GLfloat AttractorModel::getNRadius() const
 {
     return mRadius;

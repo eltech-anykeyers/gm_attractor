@@ -25,6 +25,8 @@ public:
                       GLint from, GLsizei count);
     virtual void clearVertexData();
 
+    const std::vector<glm::vec3>& getTrajectoryVertices() const;
+
     GLfloat getNRadius() const;
     void setRadius(GLfloat radius);
 
