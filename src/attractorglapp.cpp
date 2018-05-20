@@ -98,7 +98,7 @@ void AttractorGLApp::mainLoop()
 
         /// TODO: Maybe disable attractors switching for drawing ->
         /// -> always mFirstAttractorTime == mSecondAttractorTime.
-        for (GLsizei idx = 0; idx < mFirstAttractorTime; ++idx)
+        for (GLsizei idx = 0; idx <= mFirstAttractorTime; ++idx)
         {
             mFirstAttractor->draw(projViewMat, idx, 1);
             if (mPositionsToBeDrawnBoth[idx])
