@@ -67,6 +67,8 @@ void AttractorGLApp::configureApp()
                                     mSecondAttractorSection + "y.txt"));
     mSecondAttractor->setRadius(0.07f);
 
+    calculatePositionsToBeDrawnBoth();
+
     /// Background.
     configureBackground();
 
@@ -93,8 +95,17 @@ void AttractorGLApp::mainLoop()
 
         /// Attractors.
         glm::mat4 projViewMat = mProjectionMat * sCamera->getViewMatrix();
-        mFirstAttractor->draw(projViewMat, 0, mFirstAttractorTime);
-        mSecondAttractor->draw(projViewMat, 0, mSecondAttractorTime);
+
+        /// TODO: Maybe disable attractors switching for drawing ->
+        /// -> always mFirstAttractorTime == mSecondAttractorTime.
+        for (GLsizei idx = 0; idx < mFirstAttractorTime; ++idx)
+        {
+            mFirstAttractor->draw(projViewMat, idx, 1);
+            if (mPositionsToBeDrawnBoth[idx])
+            {
+                mSecondAttractor->draw(projViewMat, idx, 1);
+            }
+        }
 
         glfwSwapBuffers(mWindow);
     }
@@ -315,6 +326,22 @@ void AttractorGLApp::drawBackgroundGradient(const glm::vec3& topColor, const glm
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);
     glEnable(GL_DEPTH_TEST);
+    return;
+}
+
+void AttractorGLApp::calculatePositionsToBeDrawnBoth()
+{
+    const auto& firstPoints = mFirstAttractor->getTrajectoryVertices();
+    const auto& secondPoints = mSecondAttractor->getTrajectoryVertices();
+
+    mPositionsToBeDrawnBoth.reserve(firstPoints.size());
+
+    for (GLsizei idx = 0; idx < firstPoints.size(); ++idx)
+    {
+        GLfloat distance = glm::distance(firstPoints[idx], secondPoints[idx]);
+        mPositionsToBeDrawnBoth.push_back(distance > DISTANCE_THRESHOLD);
+    }
+
     return;
 }
 

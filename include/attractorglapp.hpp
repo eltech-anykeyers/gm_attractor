@@ -58,6 +58,8 @@ private:
     constexpr static const GLsizei MIN_TIME = 1;
     constexpr static const GLsizei MAX_TIME = 10000;
 
+    constexpr static const GLfloat DISTANCE_THRESHOLD = 0.025f;
+
     constexpr static const GLfloat COLOR_DELTA = 0.001f;
 
     static std::unique_ptr<Camera> sCamera;
@@ -83,6 +85,8 @@ private:
     std::string mSecondAttractorTrajectory;
     std::string mSecondAttractorSection;
 
+    std::vector<bool> mPositionsToBeDrawnBoth;
+
     /// Transformations.
     glm::mat4 mProjectionMat;
 
@@ -104,6 +108,8 @@ private:
     void drawBackgroundGradient(const glm::vec3& topColor,
                                 const glm::vec3& bottomColor
                                ) const;
+
+    void calculatePositionsToBeDrawnBoth();
 };
 
 #endif // ATTRACTORGLAPP_HPP
