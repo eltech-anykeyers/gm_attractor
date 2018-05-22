@@ -63,7 +63,6 @@ void AttractorModel::draw(
     setModelMatrix(std::move(getModelMatrix()));
     setMvpMatrix(std::move(viewProjectionMatrix * getModelMatrix()));
     mShader->setVec4("color", mColor);
-    mShader->setVec4("light_color", 1.0f, 1.0f, 1.0f, 1.0f);
 
     for ( GLint i = 0; i < count; i++ )
         drawSegment(from + i);
