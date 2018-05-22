@@ -23,7 +23,7 @@ void AttractorModel::configure()
 {
 
     mVerticesBuffer = std::make_unique<glm::vec3[]>(mNSectionVertices);
-    mSegmentBuffer  = std::make_unique<glm::vec3[]>(2*mNSectionVertices+2);
+    mSegmentBuffer  = std::make_unique<glm::vec3[]>(3*mNSectionVertices+3);
 
     mShader = std::make_unique<Shader>("shaders/attractor/vert.glsl",
                                        "shaders/attractor/frag.glsl");
@@ -170,19 +170,29 @@ void AttractorModel::computeSegment(GLint segmentNo, GLuint& vao, GLuint& vbo)
             mRadius * mSectionVertices[i].y * p2 ;
         mSegmentBuffer[2*i] = mVerticesBuffer[i];
         mSegmentBuffer[2*i+1] = mVerticesBuffer[i] = nextVertex;
+
+        /// Normal of current polygon.
+        auto lhs = i % 2 ? mVerticesBuffer[i] - mVerticesBuffer[i-1]
+                         : mVerticesBuffer[i+1] - mVerticesBuffer[i];
+        auto rhs = nextVertex - mVerticesBuffer[i];
+        mSegmentBuffer[2*i+2] = glm::cross(lhs, rhs);
     }
     mSegmentBuffer[2*mNSectionVertices]   = mSegmentBuffer[0];
     mSegmentBuffer[2*mNSectionVertices+1] = mSegmentBuffer[1];
+    mSegmentBuffer[2*mNSectionVertices+2] = mSegmentBuffer[2];
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
     glBindVertexArray(vao);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, (2*mNSectionVertices + 2) * sizeof(glm::vec3),
+    glBufferData(GL_ARRAY_BUFFER, (3*mNSectionVertices + 3) * sizeof(glm::vec3),
                  mSegmentBuffer.get(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3),
                           reinterpret_cast<GLvoid*>(0));
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(glm::vec3),
+                          reinterpret_cast<GLvoid*>(3 * sizeof(glm::vec3)));
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
