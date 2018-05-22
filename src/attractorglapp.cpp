@@ -50,7 +50,7 @@ void AttractorGLApp::configureApp()
                                     mFirstAttractorSection + "x.txt",
                                 sectionsDir +
                                     mFirstAttractorSection + "y.txt"));
-    mFirstAttractor->setColor(glm::vec4(1.0f, 0.0f, 0.0f, 0.67f));
+    mFirstAttractor->setColor(glm::vec4(1.0f, 0.0f, 0.0f, 0.95f));
     mFirstAttractor->setRadius(0.07f);
 
     /// Second attractor.
@@ -66,7 +66,7 @@ void AttractorGLApp::configureApp()
                                     mSecondAttractorSection + "x.txt",
                                 sectionsDir +
                                     mSecondAttractorSection + "y.txt"));
-    mSecondAttractor->setColor(glm::vec4(0.0f, 0.0f, 1.0f, 0.67f));
+    mSecondAttractor->setColor(glm::vec4(0.0f, 0.0f, 1.0f, 0.95f));
     mSecondAttractor->setRadius(0.07f);
 
     calculatePositionsToBeDrawnBoth();
