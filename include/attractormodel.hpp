@@ -54,6 +54,7 @@ private:
     std::unique_ptr<glm::vec3[]> mSegmentBuffer;
 
     void setMvpMatrix(const glm::mat4& mvp);
+    void setModelMatrix(const glm::mat4& model);
     void drawSegment(GLint segmentNo);
     void computeSegment(GLint segmentNo, GLuint& vao, GLuint& vbo);
 };

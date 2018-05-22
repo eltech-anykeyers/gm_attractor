@@ -60,6 +60,7 @@ void AttractorModel::draw(
         GLint from, GLsizei count)
 {
     mShader->use();
+    setModelMatrix(std::move(getModelMatrix()));
     setMvpMatrix(std::move(viewProjectionMatrix * getModelMatrix()));
     mShader->setVec4("color", mColor);
     mShader->setVec4("light_color", 1.0f, 1.0f, 1.0f, 1.0f);
@@ -116,6 +117,17 @@ void AttractorModel::setMvpMatrix(const glm::mat4& mvp)
     mShader->setVec4("trans_1", mvp[1][0], mvp[1][1], mvp[1][2], mvp[1][3]);
     mShader->setVec4("trans_2", mvp[2][0], mvp[2][1], mvp[2][2], mvp[2][3]);
     mShader->setVec4("trans_3", mvp[3][0], mvp[3][1], mvp[3][2], mvp[3][3]);
+
+    return;
+}
+
+void AttractorModel::setModelMatrix(const glm::mat4& model)
+{
+    // Dirty hack to avoid hardware bug
+    mShader->setVec4("model_0", model[0][0], model[0][1], model[0][2], model[0][3]);
+    mShader->setVec4("model_1", model[1][0], model[1][1], model[1][2], model[1][3]);
+    mShader->setVec4("model_2", model[2][0], model[2][1], model[2][2], model[2][3]);
+    mShader->setVec4("model_3", model[3][0], model[3][1], model[3][2], model[3][3]);
 
     return;
 }
