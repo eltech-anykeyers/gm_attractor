@@ -7,7 +7,7 @@ AttractorGLApp::AttractorGLApp(
         GLint width, GLint height, const std::string& title)
     : IGLApp(width, height, title)
     , mAttractorFilter(AttractorFilter::BOTH)
-    , mTimeDiff(100.0f)
+    , mTimeDiff(1.0f)
     , mRadius(0.01f)
     , mFirstAttractorTrajectory("coullet_1/")
     , mFirstAttractorSection("heart/")
