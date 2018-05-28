@@ -74,6 +74,7 @@ private:
     AttractorFilter mAttractorFilter;
 
     GLfloat mTimeDiff;
+    GLfloat mRadius;
 
     /// First attractor.
     GLfloat mFirstAttractorTime;

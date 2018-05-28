@@ -8,6 +8,7 @@ AttractorGLApp::AttractorGLApp(
     : IGLApp(width, height, title)
     , mAttractorFilter(AttractorFilter::BOTH)
     , mTimeDiff(100.0f)
+    , mRadius(0.01f)
     , mFirstAttractorTrajectory("coullet_1/")
     , mFirstAttractorSection("heart/")
     , mSecondAttractorTrajectory("coullet_2/")
@@ -52,7 +53,7 @@ void AttractorGLApp::configureApp()
                                 sectionsDir +
                                     mFirstAttractorSection + "y.txt"));
     mFirstAttractor->setColor(glm::vec4(1.0f, 0.0f, 0.0f, 0.67f));
-    mFirstAttractor->setRadius(0.07f);
+    mFirstAttractor->setRadius(mRadius);
 
     /// Second attractor.
     mSecondAttractorTime = 0;
@@ -68,7 +69,7 @@ void AttractorGLApp::configureApp()
                                 sectionsDir +
                                     mSecondAttractorSection + "y.txt"));
     mSecondAttractor->setColor(glm::vec4(0.0f, 0.0f, 1.0f, 0.67f));
-    mSecondAttractor->setRadius(0.07f);
+    mSecondAttractor->setRadius(mRadius);
 
     calculatePositionsToBeDrawnBoth();
 
