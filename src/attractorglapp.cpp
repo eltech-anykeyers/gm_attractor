@@ -7,6 +7,7 @@ AttractorGLApp::AttractorGLApp(
         GLint width, GLint height, const std::string& title)
     : IGLApp(width, height, title)
     , mAttractorFilter(AttractorFilter::BOTH)
+    , mTimeDiff(100.0f)
     , mFirstAttractorTrajectory("coullet_1/")
     , mFirstAttractorSection("heart/")
     , mSecondAttractorTrajectory("coullet_2/")
@@ -232,35 +233,53 @@ void AttractorGLApp::adjustAttractorTime(bool toIncrement)
     {
         if (toIncrement)
         {
-            if (++mFirstAttractorTime > MAX_TIME) mFirstAttractorTime = MAX_TIME;
+            mFirstAttractorTime += mTimeDiff;
+            if (mFirstAttractorTime > MAX_TIME)
+                mFirstAttractorTime = MAX_TIME;
         }
         else
         {
-            if (--mFirstAttractorTime < MIN_TIME) mFirstAttractorTime = MIN_TIME;
+            mFirstAttractorTime -= mTimeDiff;
+            if (mFirstAttractorTime < MIN_TIME)
+                mFirstAttractorTime = MIN_TIME;
         }
     }
     else if (mAttractorFilter == AttractorFilter::SECOND)
     {
         if (toIncrement)
         {
-            if (++mSecondAttractorTime > MAX_TIME) mSecondAttractorTime = MAX_TIME;
+            mSecondAttractorTime += mTimeDiff;
+            if (mSecondAttractorTime > MAX_TIME)
+                mSecondAttractorTime = MAX_TIME;
         }
         else
         {
-            if (--mSecondAttractorTime < MIN_TIME) mSecondAttractorTime = MIN_TIME;
+            mSecondAttractorTime -= mTimeDiff;
+            if (mSecondAttractorTime < MIN_TIME)
+                mSecondAttractorTime = MIN_TIME;
         }
     }
     else /// Both.
     {
         if (toIncrement)
         {
-            if (++mFirstAttractorTime > MAX_TIME) mFirstAttractorTime = MAX_TIME;
-            if (++mSecondAttractorTime > MAX_TIME) mSecondAttractorTime = MAX_TIME;
+            mFirstAttractorTime += mTimeDiff;
+            mSecondAttractorTime += mTimeDiff;
+
+            if (mFirstAttractorTime > MAX_TIME)
+                mFirstAttractorTime = MAX_TIME;
+            if (mSecondAttractorTime > MAX_TIME)
+                mSecondAttractorTime = MAX_TIME;
         }
         else
         {
-            if (--mFirstAttractorTime < MIN_TIME) mFirstAttractorTime = MIN_TIME;
-            if (--mSecondAttractorTime < MIN_TIME) mSecondAttractorTime = MIN_TIME;
+            mFirstAttractorTime -= mTimeDiff;
+            mSecondAttractorTime -= mTimeDiff;
+
+            if (mFirstAttractorTime < MIN_TIME)
+                mFirstAttractorTime = MIN_TIME;
+            if (mSecondAttractorTime < MIN_TIME)
+                mSecondAttractorTime = MIN_TIME;
         }
     }
 }

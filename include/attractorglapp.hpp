@@ -73,6 +73,8 @@ private:
 
     AttractorFilter mAttractorFilter;
 
+    GLfloat mTimeDiff;
+
     /// First attractor.
     GLfloat mFirstAttractorTime;
     std::unique_ptr<AttractorModel> mFirstAttractor;
