@@ -99,9 +99,6 @@ void AttractorGLApp::mainLoop()
 
         /// Attractors.
         glm::mat4 projViewMat = mProjectionMat * sCamera->getViewMatrix();
-
-        /// TODO: Maybe disable attractors switching for drawing ->
-        /// -> always mFirstAttractorTime == mSecondAttractorTime.
         for (GLsizei idx = 0; idx <= mFirstAttractorTime; ++idx)
         {
             mFirstAttractor->draw(projViewMat, idx, 1);
@@ -168,11 +165,13 @@ void AttractorGLApp::processInputForAttractors()
     if (glfwGetKey(mWindow, GLFW_KEY_8) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::ALPHA, false); /// DEC ALPHA.
 
+    /// Time diff adjusting.
     if (glfwGetKey(mWindow, GLFW_KEY_F1) == GLFW_PRESS)
         if (++mTimeDiff > 100.0f) mTimeDiff = 100.0f;
     if (glfwGetKey(mWindow, GLFW_KEY_F2) == GLFW_PRESS)
         if (--mTimeDiff < 1.0f) mTimeDiff = 1.0f;
 
+    /// Radius adjusting.
     if (glfwGetKey(mWindow, GLFW_KEY_F3) == GLFW_PRESS)
     {
         mRadius += 0.005f;
