@@ -62,6 +62,8 @@ private:
 
     constexpr static const GLfloat COLOR_DELTA = 0.001f;
 
+    constexpr static const GLfloat PI_TWICE = 2.0f * glm::pi<GLfloat>();
+
     static std::unique_ptr<Camera> sCamera;
 
     GLfloat mFpsTimeDelta;
@@ -75,6 +77,7 @@ private:
 
     GLfloat mTimeDiff;
     GLfloat mRadius;
+    glm::vec3 mRotation;
 
     /// First attractor.
     GLfloat mFirstAttractorTime;

@@ -9,6 +9,7 @@ AttractorGLApp::AttractorGLApp(
     , mAttractorFilter(AttractorFilter::BOTH)
     , mTimeDiff(1.0f)
     , mRadius(0.01f)
+    , mRotation(0.0f, 0.0f, 0.0f)
     , mFirstAttractorTrajectory("coullet_1/")
     , mFirstAttractorSection("heart/")
     , mSecondAttractorTrajectory("coullet_2/")
@@ -187,6 +188,59 @@ void AttractorGLApp::processInputForAttractors()
             mRadius = 0.01f;
         mFirstAttractor->setRadius(mRadius);
         mSecondAttractor->setRadius(mRadius);
+    }
+
+    /// Rotating.
+    /// x-rotation.
+    if (glfwGetKey(mWindow, GLFW_KEY_F5) == GLFW_PRESS)
+    {
+        mRotation.x += 0.025f;
+        if (mRotation.x > PI_TWICE)
+            mRotation.x = 0.0f;
+        mFirstAttractor->rotateTo(mRotation);
+        mSecondAttractor->rotateTo(mRotation);
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_F6) == GLFW_PRESS)
+    {
+        mRotation.x -= 0.025f;
+        if (mRotation.x < 0.0f)
+            mRotation.x = PI_TWICE;
+        mFirstAttractor->rotateTo(mRotation);
+        mSecondAttractor->rotateTo(mRotation);
+    }
+    /// y-rotation.
+    if (glfwGetKey(mWindow, GLFW_KEY_F7) == GLFW_PRESS)
+    {
+        mRotation.y += 0.025f;
+        if (mRotation.y > PI_TWICE)
+            mRotation.y = 0.0f;
+        mFirstAttractor->rotateTo(mRotation);
+        mSecondAttractor->rotateTo(mRotation);
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_F8) == GLFW_PRESS)
+    {
+        mRotation.y -= 0.025f;
+        if (mRotation.y < 0.0f)
+            mRotation.y = PI_TWICE;
+        mFirstAttractor->rotateTo(mRotation);
+        mSecondAttractor->rotateTo(mRotation);
+    }
+    /// z-rotation.
+    if (glfwGetKey(mWindow, GLFW_KEY_F9) == GLFW_PRESS)
+    {
+        mRotation.z += 0.025f;
+        if (mRotation.z > PI_TWICE)
+            mRotation.z = 0.0f;
+        mFirstAttractor->rotateTo(mRotation);
+        mSecondAttractor->rotateTo(mRotation);
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_F10) == GLFW_PRESS)
+    {
+        mRotation.z -= 0.025f;
+        if (mRotation.z < 0.0f)
+            mRotation.z = PI_TWICE;
+        mFirstAttractor->rotateTo(mRotation);
+        mSecondAttractor->rotateTo(mRotation);
     }
 }
 
