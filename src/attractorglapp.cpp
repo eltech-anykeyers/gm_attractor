@@ -172,6 +172,23 @@ void AttractorGLApp::processInputForAttractors()
         if (++mTimeDiff > 100.0f) mTimeDiff = 100.0f;
     if (glfwGetKey(mWindow, GLFW_KEY_F2) == GLFW_PRESS)
         if (--mTimeDiff < 1.0f) mTimeDiff = 1.0f;
+
+    if (glfwGetKey(mWindow, GLFW_KEY_F3) == GLFW_PRESS)
+    {
+        mRadius += 0.005f;
+        if (mRadius > 0.1f)
+            mRadius = 0.1f;
+        mFirstAttractor->setRadius(mRadius);
+        mSecondAttractor->setRadius(mRadius);
+    }
+    if (glfwGetKey(mWindow, GLFW_KEY_F4) == GLFW_PRESS)
+    {
+        mRadius -= 0.005f;
+        if (mRadius < 0.01f)
+            mRadius = 0.01f;
+        mFirstAttractor->setRadius(mRadius);
+        mSecondAttractor->setRadius(mRadius);
+    }
 }
 
 void AttractorGLApp::configureBackground()
