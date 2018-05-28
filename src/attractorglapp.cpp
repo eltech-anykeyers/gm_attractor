@@ -166,6 +166,11 @@ void AttractorGLApp::processInputForAttractors()
         adjustAttractorColor(ColorComponent::ALPHA, true);  /// INC ALPHA.
     if (glfwGetKey(mWindow, GLFW_KEY_8) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::ALPHA, false); /// DEC ALPHA.
+
+    if (glfwGetKey(mWindow, GLFW_KEY_F1) == GLFW_PRESS)
+        if (++mTimeDiff > 100.0f) mTimeDiff = 100.0f;
+    if (glfwGetKey(mWindow, GLFW_KEY_F2) == GLFW_PRESS)
+        if (--mTimeDiff < 1.0f) mTimeDiff = 1.0f;
 }
 
 void AttractorGLApp::configureBackground()
