@@ -325,7 +325,7 @@ std::vector<glm::vec2> AttractorGLApp::readSectionVertices(
 
 void AttractorGLApp::adjustAttractorTime(bool toIncrement)
 {
-    if (mAttractorFilter == AttractorFilter::FIRST)
+/*  if (mAttractorFilter == AttractorFilter::FIRST)
     {
         if (toIncrement)
         {
@@ -356,7 +356,7 @@ void AttractorGLApp::adjustAttractorTime(bool toIncrement)
         }
     }
     else /// Both.
-    {
+    { */
         if (toIncrement)
         {
             mFirstAttractorTime += mTimeDiff;
@@ -377,7 +377,7 @@ void AttractorGLApp::adjustAttractorTime(bool toIncrement)
             if (mSecondAttractorTime < MIN_TIME)
                 mSecondAttractorTime = MIN_TIME;
         }
-    }
+/*  } */
 }
 
 void AttractorGLApp::adjustAttractorColor(const ColorComponent& component,
