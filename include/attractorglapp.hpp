@@ -58,6 +58,8 @@ private:
     constexpr static const GLsizei MIN_TIME = 1;
     constexpr static const GLsizei MAX_TIME = 10000;
 
+    constexpr static const GLsizei END_TIME = MAX_TIME - 10;
+
     constexpr static const GLfloat DISTANCE_THRESHOLD = 0.025f;
 
     constexpr static const GLfloat COLOR_DELTA = 0.001f;

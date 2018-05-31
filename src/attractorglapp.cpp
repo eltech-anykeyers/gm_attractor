@@ -102,11 +102,39 @@ void AttractorGLApp::mainLoop()
         glm::mat4 projViewMat = mProjectionMat * sCamera->getViewMatrix();
         for (GLsizei idx = 0; idx <= mFirstAttractorTime; ++idx)
         {
-            mFirstAttractor->draw(projViewMat, idx, 1);
-            if (mPositionsToBeDrawnBoth[idx])
+            auto draw = [&](GLsizei idx)
             {
-                mSecondAttractor->draw(projViewMat, idx, 1);
+                mFirstAttractor->draw(projViewMat, idx, 1);
+                if (mPositionsToBeDrawnBoth[idx])
+                {
+                    mSecondAttractor->draw(projViewMat, idx, 1);
+                }
+            };
+
+            /// Invert attractor's end color.
+            if (idx >= END_TIME)
+            {
+                auto firstColor = mFirstAttractor->getColor();
+                auto secondColor = mSecondAttractor->getColor();
+
+                mFirstAttractor->setColor(glm::vec4(1.0f - firstColor.r,
+                                                    1.0f - firstColor.g,
+                                                    1.0f - firstColor.b,
+                                                    firstColor.a));
+                mSecondAttractor->setColor(glm::vec4(1.0f - secondColor.r,
+                                                     1.0f - secondColor.g,
+                                                     1.0f - secondColor.b,
+                                                     secondColor.a));
+
+                draw(idx);
+
+                mFirstAttractor->setColor(firstColor);
+                mSecondAttractor->setColor(secondColor);
+
+                continue;
             }
+
+            draw(idx);
         }
 
         glfwSwapBuffers(mWindow);
