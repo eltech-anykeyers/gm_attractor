@@ -177,21 +177,21 @@ void AttractorGLApp::processInputForAttractors()
         adjustAttractorTime(false);
 
     /// Color transformation.
-    if (glfwGetKey(mWindow, GLFW_KEY_1) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_Z) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::RED, true);    /// INC RED.
-    if (glfwGetKey(mWindow, GLFW_KEY_2) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_X) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::RED, false);   /// DEC RED.
-    if (glfwGetKey(mWindow, GLFW_KEY_3) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_C) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::GREEN, true);  /// INC GREEN.
-    if (glfwGetKey(mWindow, GLFW_KEY_4) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_V) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::GREEN, false); /// DEC GREEN.
-    if (glfwGetKey(mWindow, GLFW_KEY_5) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_B) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::BLUE, true);   /// INC BLUE.
-    if (glfwGetKey(mWindow, GLFW_KEY_6) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_N) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::BLUE, false);  /// DEC BLUE.
-    if (glfwGetKey(mWindow, GLFW_KEY_7) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_M) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::ALPHA, true);  /// INC ALPHA.
-    if (glfwGetKey(mWindow, GLFW_KEY_8) == GLFW_PRESS)
+    if (glfwGetKey(mWindow, GLFW_KEY_COMMA) == GLFW_PRESS)
         adjustAttractorColor(ColorComponent::ALPHA, false); /// DEC ALPHA.
 
     /// Time diff adjusting.
