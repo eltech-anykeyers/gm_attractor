@@ -62,7 +62,7 @@ private:
 
     constexpr static const GLfloat DISTANCE_THRESHOLD = 0.025f;
 
-    constexpr static const GLfloat COLOR_DELTA = 0.001f;
+    constexpr static const GLfloat COLOR_DELTA = 0.01f;
 
     constexpr static const GLfloat PI_TWICE = 2.0f * glm::pi<GLfloat>();
 
